@@ -1,0 +1,9 @@
+repositories:
+  cartographer/cartographer_ros:
+    type: git
+    url: https://github.com/ROBOTIS-GIT/cartographer_ros.git
+    version: crystal
+  navigation2/navigation2:
+    type: git
+    url: https://github.com/crdelsey/navigation2.git
+    version: 768-cmake-fix
