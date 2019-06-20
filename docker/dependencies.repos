@@ -5,5 +5,5 @@ repositories:
     version: crystal
   navigation2/navigation2:
     type: git
-    url: https://github.com/crdelsey/navigation2.git
-    version: 768-cmake-fix
+    url: https://github.com/ros-planning/navigation2.git
+    version: master
