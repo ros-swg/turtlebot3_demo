@@ -1,0 +1,7 @@
+image: /media/mikatchou/ROS/ros2/tb3_swg/overlay_ws/map.pgm
+resolution: 0.050000
+origin: [-1.243389, -2.401993, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
