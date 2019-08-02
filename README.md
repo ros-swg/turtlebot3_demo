@@ -102,6 +102,7 @@ Run these commands in shell 1 and 4 for the navigation demo.
 export ROS_SECURITY_ENABLE=true
 export ROS_SECURITY_STRATEGY=Enforce
 export ROS_SECURITY_ROOT_DIRECTORY=<OVERLAY_WORKSPACE>/keystore
+export ROS_SECURITY_LOOKUP_TYPE=MATCH_PREFIX
 ```
 
 Then refer to steps described in "Navigating a known map"
