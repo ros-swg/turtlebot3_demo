@@ -2,26 +2,15 @@
   xmlns:xi="http://www.w3.org/2001/XInclude">
   <profiles>
     <profile node="amcl" ns="/">
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>global_localization</service>
         <service>request_nomotion_update</service>
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
       <topics subscribe="ALLOW">
-        <topic>clock</topic>
         <topic>initialpose</topic>
         <topic>map</topic>
-        <topic>parameter_events</topic>
         <!-- added by hand -->
         <topic>scan</topic>
         <topic>/tf</topic>
@@ -29,86 +18,35 @@
       </topics>
       <topics publish="ALLOW">
         <topic>amcl_pose</topic>
-        <topic>parameter_events</topic>
         <topic>particlecloud</topic>
-        <topic>rosout</topic>
-        <topic>~transition_event</topic>
       </topics>
     </profile>
     <profile node="amcl_rclcpp_node" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-        <topic>scan</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-        <topic>tf</topic>
-      </topics>
-    <!-- added by hand -->
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>global_localization</service>
         <service>request_nomotion_update</service>
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
       </services>
       <topics subscribe="ALLOW">
         <topic>initialpose</topic>
         <topic>map</topic>
+        <topic>scan</topic>
       </topics>
       <topics publish="ALLOW">
         <topic>amcl_pose</topic>
         <topic>particlecloud</topic>
-        <topic>~transition_event</topic>
+        <topic>tf</topic>
       </topics>
 
     </profile>
     <profile node="bt_navigator" ns="/">
-      <services reply="ALLOW">
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-        <topic>~transition_event</topic>
-      </topics>
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
     </profile>
     <profile node="bt_navigator_client_node" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services request="ALLOW">
         <service>/ComputePathToPose/_action/cancel_goal</service>
         <service>/ComputePathToPose/_action/get_result</service>
@@ -134,76 +72,37 @@
         <topic>/Spin/_action/status</topic>
         <topic>amcl_pose</topic>
         <topic>odom</topic>
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="bt_navigator_global_localization_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services request="ALLOW">
         <service>global_localization</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="bt_navigator_rclcpp_node" ns="/">
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>/NavigateToPose/_action/cancel_goal</service>
         <service>/NavigateToPose/_action/get_result</service>
         <service>/NavigateToPose/_action/send_goal</service>
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
       <topics subscribe="ALLOW">
         <topic>/move_base_simple/goal</topic>
-        <topic>parameter_events</topic>
       </topics>
       <topics publish="ALLOW">
         <topic>/NavigateToPose/_action/feedback</topic>
         <topic>/NavigateToPose/_action/status</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="dwb_controller" ns="/">
-      <services reply="ALLOW">
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics subscribe="ALLOW">
-        <topic>clock</topic>
         <topic>odom</topic>
-        <topic>parameter_events</topic>
         <topic>scan</topic>
-      
       </topics>
       <topics publish="ALLOW">
         <topic>cmd_vel</topic>
@@ -211,58 +110,34 @@
         <topic>evaluation</topic>
         <topic>local_plan</topic>
         <topic>marker</topic>
-        <topic>parameter_events</topic>
         <topic>received_global_plan</topic>
-        <topic>rosout</topic>
         <topic>transformed_global_plan</topic>
-        <topic>~transition_event</topic>
       </topics>
     </profile>
     <profile node="dwb_controller_rclcpp_node" ns="/">
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>/FollowPath/_action/cancel_goal</service>
         <service>/FollowPath/_action/get_result</service>
         <service>/FollowPath/_action/send_goal</service>
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
       <topics publish="ALLOW">
         <topic>/FollowPath/_action/feedback</topic>
         <topic>/FollowPath/_action/status</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="gazebo" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>pause_physics</service>
         <service>reset_simulation</service>
         <service>reset_world</service>
         <service>unpause_physics</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
       <topics publish="ALLOW">
         <topic>clock</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="global_costmap_client" ns="/">
@@ -283,100 +158,46 @@
       </topics>
     </profile>
     <profile node="global_costmap" ns="/global_costmap">
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>clear_around_global_costmap</service>
         <service>clear_entirely_global_costmap</service>
         <service>clear_except_global_costmap</service>
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
       <topics subscribe="ALLOW">
-        <topic>/clock</topic>
         <topic>/map</topic>
         <topic>footprint</topic>
-        <topic>parameter_events</topic>
       </topics>
       <topics publish="ALLOW">
         <topic>costmap</topic>
         <topic>costmap_raw</topic>
         <topic>costmap_updates</topic>
-        <topic>parameter_events</topic>
         <topic>published_footprint</topic>
-        <topic>rosout</topic>
-        <topic>~transition_event</topic>
       </topics>
     </profile>
     <profile node="global_costmap_rclcpp_node" ns="/global_costmap">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics subscribe="ALLOW">
-        <topic>/clock</topic>
         <topic>/scan</topic>
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="launch_ros" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
     </profile>
     <profile node="lifecycle_manager" ns="/">
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
         <service>~shutdown</service>
         <service>~startup</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="lifecycle_managerservice_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services request="ALLOW">
         <service>/amcl/change_state</service>
         <service>/amcl/get_state</service>
@@ -391,206 +212,84 @@
         <service>/world_model/change_state</service>
         <service>/world_model/get_state</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="local_costmap_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
     </profile>
     <profile node="local_costmap" ns="/local_costmap">
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>clear_around_local_costmap</service>
         <service>clear_entirely_local_costmap</service>
         <service>clear_except_local_costmap</service>
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
       <topics subscribe="ALLOW">
-        <topic>/clock</topic>
         <topic>footprint</topic>
-        <topic>parameter_events</topic>
       </topics>
       <topics publish="ALLOW">
         <topic>costmap</topic>
         <topic>costmap_raw</topic>
         <topic>costmap_updates</topic>
-        <topic>parameter_events</topic>
         <topic>published_footprint</topic>
-        <topic>rosout</topic>
-        <topic>~transition_event</topic>
       </topics>
     </profile>
     <profile node="local_costmap_rclcpp_node" ns="/local_costmap">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics subscribe="ALLOW">
-        <topic>/clock</topic>
         <topic>/scan</topic>
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="map_server" ns="/">
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>map</service>
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
       <topics publish="ALLOW">
         <topic>map</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-        <topic>~transition_event</topic>
       </topics>
     </profile>
     <profile node="navfn_planner" ns="/">
-      <services reply="ALLOW">
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics publish="ALLOW">
         <topic>endpoints</topic>
-        <topic>parameter_events</topic>
         <topic>plan</topic>
-        <topic>rosout</topic>
-        <topic>~transition_event</topic>
       </topics>
     </profile>
     <profile node="navfn_planner_GetCostmap_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services request="ALLOW">
         <service>GetCostmap</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="navfn_planner_GetRobotPose_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services request="ALLOW">
         <service>GetRobotPose</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="navfn_planner_rclcpp_node" ns="/">
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>/ComputePathToPose/_action/cancel_goal</service>
         <service>/ComputePathToPose/_action/get_result</service>
         <service>/ComputePathToPose/_action/send_goal</service>
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
       <topics publish="ALLOW">
         <topic>/ComputePathToPose/_action/feedback</topic>
         <topic>/ComputePathToPose/_action/status</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="navigation_dialog_action_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services request="ALLOW">
         <service>/NavigateToPose/_action/cancel_goal</service>
         <service>/NavigateToPose/_action/get_result</service>
@@ -601,12 +300,10 @@
         <topic>/NavigateToPose/_action/status</topic>
         <topic>parameter_events</topic>
       </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="recoveries" ns="/">
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>/BackUp/_action/cancel_goal</service>
         <service>/BackUp/_action/get_result</service>
@@ -614,20 +311,12 @@
         <service>/Spin/_action/cancel_goal</service>
         <service>/Spin/_action/get_result</service>
         <service>/Spin/_action/send_goal</service>
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
       <topics subscribe="ALLOW">
         <topic>/global_costmap/costmap_raw</topic>
         <topic>/global_costmap/published_footprint</topic>
         <topic>amcl_pose</topic>
-        <topic>clock</topic>
         <topic>odom</topic>
-        <topic>parameter_events</topic>
       </topics>
       <topics publish="ALLOW">
         <topic>/BackUp/_action/feedback</topic>
@@ -635,60 +324,31 @@
         <topic>/Spin/_action/feedback</topic>
         <topic>/Spin/_action/status</topic>
         <topic>cmd_vel</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="recovery_GetRobotPose_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services request="ALLOW">
         <service>GetRobotPose</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="robot_state_publisher" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics subscribe="ALLOW">
-        <topic>clock</topic>
         <topic>joint_states</topic>
-        <topic>parameter_events</topic>
       </topics>
       <topics publish="ALLOW">
-        <topic>parameter_events</topic>
         <topic>robot_description</topic>
-        <topic>rosout</topic>
         <topic>tf</topic>
         <topic>tf_static</topic>
       </topics>
     </profile>
     <profile node="rviz2" ns="/">
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
         <!-- added by hand -->
         <service>lifecycle_manager/startup</service>
       </services>
@@ -704,11 +364,8 @@
       <topics subscribe="ALLOW">
         <topic>/NavigateToPose/_action/feedback</topic>
         <topic>/NavigateToPose/_action/status</topic>
-        <!-- END added by hand -->
-        <topic>parameter_events</topic>
       </topics>
       <topics subscribe="ALLOW">
-        <topic>/clock</topic>
         <topic>/global_costmap/costmap</topic>
         <topic>/global_costmap/costmap_updates</topic>
         <topic>/local_costmap/costmap</topic>
@@ -721,7 +378,6 @@
         <topic>map</topic>
         <topic>map_updates</topic>
         <topic>marker</topic>
-        <topic>parameter_events</topic>
         <topic>particlecloud</topic>
         <topic>plan</topic>
         <topic>robot_description</topic>
@@ -733,135 +389,58 @@
       <topics publish="ALLOW">
         <topic>clicked_point</topic>
         <topic>initialpose</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
         <!-- added by hand -->
         <topic>goal</topic>
         <topic>move_base_simple/goal</topic>
       </topics>
     </profile>
     <profile node="transform_listener_impl" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
         <topic>tf</topic>
         <topic>tf_static</topic>
       </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
     </profile>
     <profile node="turtlebot3_diff_drive" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics subscribe="ALLOW">
-        <topic>clock</topic>
         <topic>cmd_vel</topic>
-        <topic>parameter_events</topic>
       </topics>
       <topics publish="ALLOW">
         <topic>odom</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
         <topic>tf</topic>
       </topics>
     </profile>
     <profile node="turtlebot3_imu" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics publish="ALLOW">
         <topic>imu</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="turtlebot3_joint_state" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics publish="ALLOW">
         <topic>joint_states</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
       </topics>
     </profile>
     <profile node="turtlebot3_laserscan" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
         <topic>scan</topic>
       </topics>
     </profile>
     <profile node="world_model" ns="/">
+      <xi:include href="common/lifecycle_node.xml"
+        xpointer="xpointer(/profile/*)"/>
       <services reply="ALLOW">
         <service>GetCostmap</service>
         <service>GetRobotPose</service>
-        <service>~change_state</service>
-        <service>~describe_parameters</service>
-        <service>~get_available_states</service>
-        <service>~get_available_transitions</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~get_state</service>
-        <service>~get_transition_graph</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
       </services>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-        <topic>~transition_event</topic>
-      </topics>
     </profile>
     <profile node="global_localization" ns="/">
       <xi:include href="common/node.xml"
