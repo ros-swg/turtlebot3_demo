@@ -85,52 +85,14 @@ All the artifacts will be placed in `<OVERLAY_WORKSPACE>/keystore`
 ```bash
 source <OVERLAY_WORKSPACE>/install/setup.bash
 cd <OVERLAY_WORKSPACE>
-ros2 security generate_artifacts -k keystore -n \
-  /_client_node \
-  /_local_costmap_clear_entirely_local_costmap \
-  /_ros2cli \
-  /amcl \
-  /amcl_rclcpp_node \
-  /bt_navigator \
-  /bt_navigator_client_node \
-  /bt_navigator_global_localization_client \
-  /bt_navigator_rclcpp_node \
-  /dwb_controller \
-  /dwb_controller_rclcpp_node \
-  /gazebo \
-  /global_costmap \
-  /global_costmap/global_costmap \
-  /global_costmap/global_costmap_rclcpp_node \
-  /global_costmap_client \
-  /global_localization \
-  /launch_ros \
-  /lifecycle_manager \
-  /lifecycle_managerservice_client \
-  /local_costmap \
-  /local_costmap/local_costmap \
-  /local_costmap/local_costmap_rclcpp_node \
-  /local_costmap_client \
-  /map_server \
-  /navfn_planner \
-  /navfn_planner_GetCostmap_client \
-  /navfn_planner_GetRobotPose_client \
-  /navfn_planner_rclcpp_node \
-  /navigation_dialog_action_client \
-  /recoveries \
-  /recovery_GetRobotPose_client \
-  /robot_state_publisher \
-  /rviz2 \
-  /transform_listener_impl \
-  /turtlebot3_diff_drive \
-  /turtlebot3_imu \
-  /turtlebot3_joint_state \
-  /turtlebot3_laserscan \
-  /world_model
+export DEMO_POLICY_FILE="<TB3_DEMO_REPO>/policies/tb3_gazebo_policy.xml"
+ros2 security generate_artifacts -k keystore \
+  -n \
+    /_client_node \
+    /_local_costmap_clear_entirely_local_costmap \
+    /_global_costmap_clear_entirely_global_costmap \
+  -p `DEMO_POLICY_FILE`
 ```
-
-<!--
-ros2 security generate_artifacts -k keystore -p <PATH_TO_POLICY_FILE>
--->
 
 #### Setup the environment to use security
 

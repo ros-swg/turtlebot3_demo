@@ -1,14 +1,7 @@
-<policy version="0.1.0">
+<policy version="0.1.0"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
   <profiles>
     <profile node="amcl" ns="/">
-      <!-- FIXME -->
-      <topics publish="ALLOW" subscribe="ALLOW">
-        <topic>*</topic>
-      </topics>
-      <services request="ALLOW" reply="ALLOW">
-        <service>*</service>
-      </services>
-      <!-- end hack -->
       <services reply="ALLOW">
         <service>global_localization</service>
         <service>request_nomotion_update</service>
@@ -29,6 +22,10 @@
         <topic>initialpose</topic>
         <topic>map</topic>
         <topic>parameter_events</topic>
+        <!-- added by hand -->
+        <topic>scan</topic>
+        <topic>/tf</topic>
+        <topic>/tf_static</topic>
       </topics>
       <topics publish="ALLOW">
         <topic>amcl_pose</topic>
@@ -57,7 +54,7 @@
         <topic>rosout</topic>
         <topic>tf</topic>
       </topics>
-    <!-- FIXME stuff added by hand -->
+    <!-- added by hand -->
       <services reply="ALLOW">
         <service>global_localization</service>
         <service>request_nomotion_update</service>
@@ -205,8 +202,6 @@
         <topic>clock</topic>
         <topic>odom</topic>
         <topic>parameter_events</topic>
-        <!-- FIXME added by hand -->
-        <topic>*</topic>
         <topic>scan</topic>
       
       </topics>
@@ -253,6 +248,12 @@
         <service>~list_parameters</service>
         <service>~set_parameters</service>
         <service>~set_parameters_atomically</service>
+      </services>
+      <services reply="ALLOW">
+        <service>pause_physics</service>
+        <service>reset_simulation</service>
+        <service>reset_world</service>
+        <service>unpause_physics</service>
       </services>
       <topics subscribe="ALLOW">
         <topic>clock</topic>
@@ -688,7 +689,7 @@
         <service>~list_parameters</service>
         <service>~set_parameters</service>
         <service>~set_parameters_atomically</service>
-        <!-- FIXME added by hand -->
+        <!-- added by hand -->
         <service>lifecycle_manager/startup</service>
       </services>
       <services request="ALLOW">
@@ -734,7 +735,7 @@
         <topic>initialpose</topic>
         <topic>parameter_events</topic>
         <topic>rosout</topic>
-        <!-- FIXME added by hand -->
+        <!-- added by hand -->
         <topic>goal</topic>
         <topic>move_base_simple/goal</topic>
       </topics>
@@ -861,6 +862,36 @@
         <topic>rosout</topic>
         <topic>~transition_event</topic>
       </topics>
+    </profile>
+    <profile node="global_localization" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>global_localization</service>
+      <!--services reply="ALLOW">
+        <service>GetCostmap</service>
+        <service>GetRobotPose</service>
+        <service>~change_state</service>
+        <service>~describe_parameters</service>
+        <service>~get_available_states</service>
+        <service>~get_available_transitions</service>
+        <service>~get_parameter_types</service>
+        <service>~get_parameters</service>
+        <service>~get_state</service>
+        <service>~get_transition_graph</service>
+        <service>~list_parameters</service>
+        <service>~set_parameters</service>
+        <service>~set_parameters_atomically</service-->
+      </services>
+      <!-- topics subscribe="ALLOW">
+        <topic>clock</topic>
+        <topic>parameter_events</topic>
+      </topics>
+      <topics publish="ALLOW">
+        <topic>parameter_events</topic>
+        <topic>rosout</topic>
+        <topic>~transition_event</topic
+      </topics-->
     </profile>
   </profiles>
 </policy>
