@@ -87,6 +87,7 @@ source <OVERLAY_WORKSPACE>/install/setup.bash
 cd <OVERLAY_WORKSPACE>
 ros2 security generate_artifacts -k keystore -n \
   /_client_node \
+  /_local_costmap_clear_entirely_local_costmap \
   /_ros2cli \
   /amcl \
   /amcl_rclcpp_node \
