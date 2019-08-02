@@ -89,8 +89,6 @@ export DEMO_POLICY_FILE="<TB3_DEMO_REPO>/policies/tb3_gazebo_policy.xml"
 ros2 security generate_artifacts -k keystore \
   -n \
     /_client_node \
-    /_local_costmap_clear_entirely_local_costmap \
-    /_global_costmap_clear_entirely_global_costmap \
   -p `DEMO_POLICY_FILE`
 ```
 
