@@ -47,29 +47,13 @@
     <profile node="bt_navigator_client_node" ns="/">
       <xi:include href="common/node.xml"
         xpointer="xpointer(/profile/*)"/>
-      <services request="ALLOW">
-        <service>/ComputePathToPose/_action/cancel_goal</service>
-        <service>/ComputePathToPose/_action/get_result</service>
-        <service>/ComputePathToPose/_action/send_goal</service>
-        <service>/FollowPath/_action/cancel_goal</service>
-        <service>/FollowPath/_action/get_result</service>
-        <service>/FollowPath/_action/send_goal</service>
-        <service>/NavigateToPose/_action/cancel_goal</service>
-        <service>/NavigateToPose/_action/get_result</service>
-        <service>/NavigateToPose/_action/send_goal</service>
-        <service>/Spin/_action/cancel_goal</service>
-        <service>/Spin/_action/get_result</service>
-        <service>/Spin/_action/send_goal</service>
-      </services>
+      <actions call="ALLOW">
+        <action>ComputePathToPose</action>
+        <action>FollowPath</action>
+        <action>NavigateToPose</action>
+        <action>Spin</action>
+      </actions>
       <topics subscribe="ALLOW">
-        <topic>/ComputePathToPose/_action/feedback</topic>
-        <topic>/ComputePathToPose/_action/status</topic>
-        <topic>/FollowPath/_action/feedback</topic>
-        <topic>/FollowPath/_action/status</topic>
-        <topic>/NavigateToPose/_action/feedback</topic>
-        <topic>/NavigateToPose/_action/status</topic>
-        <topic>/Spin/_action/feedback</topic>
-        <topic>/Spin/_action/status</topic>
         <topic>amcl_pose</topic>
         <topic>odom</topic>
       </topics>
@@ -84,17 +68,11 @@
     <profile node="bt_navigator_rclcpp_node" ns="/">
       <xi:include href="common/node.xml"
         xpointer="xpointer(/profile/*)"/>
-      <services reply="ALLOW">
-        <service>/NavigateToPose/_action/cancel_goal</service>
-        <service>/NavigateToPose/_action/get_result</service>
-        <service>/NavigateToPose/_action/send_goal</service>
-      </services>
+      <actions execute="ALLOW">
+        <action>NavigateToPose</action>
+      </actions>
       <topics subscribe="ALLOW">
         <topic>/move_base_simple/goal</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>/NavigateToPose/_action/feedback</topic>
-        <topic>/NavigateToPose/_action/status</topic>
       </topics>
     </profile>
     <profile node="dwb_controller" ns="/">
@@ -117,15 +95,9 @@
     <profile node="dwb_controller_rclcpp_node" ns="/">
       <xi:include href="common/node.xml"
         xpointer="xpointer(/profile/*)"/>
-      <services reply="ALLOW">
-        <service>/FollowPath/_action/cancel_goal</service>
-        <service>/FollowPath/_action/get_result</service>
-        <service>/FollowPath/_action/send_goal</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>/FollowPath/_action/feedback</topic>
-        <topic>/FollowPath/_action/status</topic>
-      </topics>
+      <actions execute="ALLOW">
+        <action>FollowPath</action>
+      </actions>
     </profile>
     <profile node="gazebo" ns="/">
       <xi:include href="common/node.xml"
@@ -141,21 +113,8 @@
       </topics>
     </profile>
     <profile node="global_costmap_client" ns="/">
-      <services reply="ALLOW">
-        <service>~describe_parameters</service>
-        <service>~get_parameter_types</service>
-        <service>~get_parameters</service>
-        <service>~list_parameters</service>
-        <service>~set_parameters</service>
-        <service>~set_parameters_atomically</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
     </profile>
     <profile node="global_costmap" ns="/global_costmap">
       <xi:include href="common/lifecycle_node.xml"
@@ -277,41 +236,27 @@
     <profile node="navfn_planner_rclcpp_node" ns="/">
       <xi:include href="common/node.xml"
         xpointer="xpointer(/profile/*)"/>
-      <services reply="ALLOW">
-        <service>/ComputePathToPose/_action/cancel_goal</service>
-        <service>/ComputePathToPose/_action/get_result</service>
-        <service>/ComputePathToPose/_action/send_goal</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>/ComputePathToPose/_action/feedback</topic>
-        <topic>/ComputePathToPose/_action/status</topic>
-      </topics>
+      <actions execute="ALLOW">
+        <action>ComputePathToPose</action>
+      </actions>
     </profile>
     <profile node="navigation_dialog_action_client" ns="/">
       <xi:include href="common/node.xml"
         xpointer="xpointer(/profile/*)"/>
-      <services request="ALLOW">
-        <service>/NavigateToPose/_action/cancel_goal</service>
-        <service>/NavigateToPose/_action/get_result</service>
-        <service>/NavigateToPose/_action/send_goal</service>
-      </services>
+      <actions call="ALLOW">
+        <action>NavigateToPose</action>
+      </actions>
       <topics subscribe="ALLOW">
-        <topic>/NavigateToPose/_action/feedback</topic>
-        <topic>/NavigateToPose/_action/status</topic>
         <topic>parameter_events</topic>
       </topics>
     </profile>
     <profile node="recoveries" ns="/">
       <xi:include href="common/node.xml"
         xpointer="xpointer(/profile/*)"/>
-      <services reply="ALLOW">
-        <service>/BackUp/_action/cancel_goal</service>
-        <service>/BackUp/_action/get_result</service>
-        <service>/BackUp/_action/send_goal</service>
-        <service>/Spin/_action/cancel_goal</service>
-        <service>/Spin/_action/get_result</service>
-        <service>/Spin/_action/send_goal</service>
-      </services>
+      <actions execute="ALLOW">
+        <action>BackUp</action>
+        <action>Spin</action>
+      </actions>
       <topics subscribe="ALLOW">
         <topic>/global_costmap/costmap_raw</topic>
         <topic>/global_costmap/published_footprint</topic>
@@ -319,10 +264,6 @@
         <topic>odom</topic>
       </topics>
       <topics publish="ALLOW">
-        <topic>/BackUp/_action/feedback</topic>
-        <topic>/BackUp/_action/status</topic>
-        <topic>/Spin/_action/feedback</topic>
-        <topic>/Spin/_action/status</topic>
         <topic>cmd_vel</topic>
       </topics>
     </profile>
@@ -356,15 +297,9 @@
         <service>lifecycle_manager/startup</service>
         <service>lifecycle_manager/shutdown</service>
       </services>
-      <services request="ALLOW">
-        <service>/NavigateToPose/_action/cancel_goal</service>
-        <service>/NavigateToPose/_action/get_result</service>
-        <service>/NavigateToPose/_action/send_goal</service>
-      </services>
-      <topics subscribe="ALLOW">
-        <topic>/NavigateToPose/_action/feedback</topic>
-        <topic>/NavigateToPose/_action/status</topic>
-      </topics>
+      <actions call="ALLOW">
+        <action>NavigateToPose</action>
+      </actions>
       <topics subscribe="ALLOW">
         <topic>/global_costmap/costmap</topic>
         <topic>/global_costmap/costmap_updates</topic>
