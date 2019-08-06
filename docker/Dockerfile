@@ -33,12 +33,13 @@ RUN colcon mixin add upstream https://raw.githubusercontent.com/colcon/colcon-mi
     colcon metadata add origin https://raw.githubusercontent.com/colcon/colcon-metadata-repository/master/index.yaml && \
     colcon metadata update
 
+ENV TB3_DEMO_DIR $HOME/tb3_demo_roscon2019
 # setup underlay
-ENV ROS2_UNDERLAY_WS /opt/ros2_underlay_ws
+ENV TB3_UNDERLAY_WS $TB3_DEMO_DIR/tb3_underlay_ws
 # copy optional additional_repos.repos
-COPY ./dependencies.repos $ROS2_UNDERLAY_WS/
-RUN mkdir -p $ROS2_UNDERLAY_WS/src
-WORKDIR $ROS2_UNDERLAY_WS
+COPY ./dependencies.repos $TB3_UNDERLAY_WS/
+RUN mkdir -p $TB3_UNDERLAY_WS/src
+WORKDIR $TB3_UNDERLAY_WS
 RUN vcs import src < dependencies.repos
 
 # build underlay
@@ -53,13 +54,13 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon \
     --mixin build-testing-off release \
     --cmake-args --no-warn-unused-cli
 
-ENV ROS_PACKAGE_PATH=$ROS2_UNDERLAY_WS/install/share:$ROS_PACKAGE_PATH
+ENV ROS_PACKAGE_PATH=$TB3_UNDERLAY_WS/install/share:$ROS_PACKAGE_PATH
 
 # setup overlay
-ENV ROS2_OVERLAY_WS /opt/ros2_overlay_ws
-RUN mkdir -p $ROS2_OVERLAY_WS/src
-COPY ./turtlebot3.repos $ROS2_OVERLAY_WS/
-WORKDIR $ROS2_OVERLAY_WS
+ENV TB3_OVERLAY_WS $TB3_DEMO_DIR/tb3_overlay_ws
+RUN mkdir -p $TB3_OVERLAY_WS/src
+COPY ./turtlebot3.repos $TB3_OVERLAY_WS/
+WORKDIR $TB3_OVERLAY_WS
 
 RUN vcs import src < turtlebot3.repos
 RUN apt-get -qq update && rosdep install -y \
@@ -68,7 +69,7 @@ RUN apt-get -qq update && rosdep install -y \
     --skip-keys "turtlebot3_lidar libopensplice69 rti-connext-dds-5.3.1" \
     && rm -rf /var/lib/apt/lists/*
 
-RUN . $ROS2_UNDERLAY_WS/install/setup.sh && colcon \
+RUN . $TB3_UNDERLAY_WS/install/setup.sh && colcon \
     build \
     --merge-install \
     --mixin build-testing-off release \
