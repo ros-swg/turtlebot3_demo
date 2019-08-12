@@ -10,22 +10,20 @@ The following environment variables will be used in the instructions.
 You can set them in your bashrc to save some time or define them in theterminal used for the demo
 
 ```bash
-export TB3_DEMO_DIR=$HOME/tb3_demo_roscon2019
-export TB3_UNDERLAY_WS=$TB3_DEMO_DIR/tb3_underlay_ws
-export TB3_OVERLAY_WS=$TB3_DEMO_DIR/tb3_overlay_ws
+export TB3_WS=/opt/tb3_ws
 export TURTLEBOT3_MODEL=burger
-export TB3_DEMO_POLICY_FILE="$TB3_DEMO_DIR/tb3_demo/policies/tb3_gazebo_policy.xml"
+export TB3_DEMO_POLICY_FILE="$TB3_WS/policies/tb3_gazebo_policy.xml"
 ```
 You'll also need to source the workspace in each terminal:
 ```bash
-source $TB3_OVERLAY_WS/install/setup.bash
+source $TB3_WS/install/setup.bash
 ```
 
 ### Launch the Gazebo TB3 simulation
 
 Shell 1:
 ```bash
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$TB3_WS/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models
 ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
 ```
 
