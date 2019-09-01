@@ -24,12 +24,12 @@ RUN . $OVERLAY_WS/install/setup.sh && \
     && rm -rf /var/lib/apt/lists/*
 
 # build underlay package source
-ARG CMAKE_BUILD_TYPE=Release
+ARG TB3_UNDERLAY_MIXINS="release"
 RUN . $OVERLAY_WS/install/setup.sh && \
     colcon build \
       --symlink-install \
-      --cmake-args \
-        -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE
+      --mixin \
+        $TB3_UNDERLAY_MIXINS
 
 # clone overlay package repos
 ENV TB3_OVERLAY_WS /opt/tb3_overlay_ws
@@ -53,12 +53,13 @@ RUN . $TB3_UNDERLAY_WS/install/setup.sh && \
     && rm -rf /var/lib/apt/lists/*
 
 # build overlay package source
+ARG TB3_OVERLAY_MIXINS="release"
 RUN touch $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_node/COLCON_IGNORE
 RUN . $TB3_UNDERLAY_WS/install/setup.sh && \
-     colcon build \
-       --symlink-install \
-       --cmake-args \
-         -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE
+    colcon build \
+      --symlink-install \
+      --mixin \
+        $TB3_OVERLAY_MIXINS
 
 # source overlay workspace from entrypoint
 RUN sed --in-place \
