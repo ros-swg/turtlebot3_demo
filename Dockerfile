@@ -1,9 +1,8 @@
 ARG FROM_IMAGE=rosplanning/navigation2:master.release
 FROM $FROM_IMAGE
 
-ENV ROS_PACKAGE_PATH=/opt/ros/$ROS_DISTRO/share:$ROS_PACKAGE_PATH
-ENV ROS_PACKAGE_PATH=$UNDERLAY_WS/src:$ROS_PACKAGE_PATH
-ENV ROS_PACKAGE_PATH=$OVERLAY_WS/src:$ROS_PACKAGE_PATH
+RUN apt purge python3-rosdep -y && \
+    pip3 install git+https://github.com/ruffsl/rosdep.git@ament
 
 # clone underlay package repos
 ENV TB3_UNDERLAY_WS /opt/tb3_underlay_ws
@@ -31,7 +30,6 @@ RUN . $OVERLAY_WS/install/setup.sh && \
       --symlink-install \
       --cmake-args \
         -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE
-ENV ROS_PACKAGE_PATH=$TB3_UNDERLAY_WS/src:$ROS_PACKAGE_PATH
 
 # clone overlay package repos
 ENV TB3_OVERLAY_WS /opt/tb3_overlay_ws
@@ -61,7 +59,6 @@ RUN . $TB3_UNDERLAY_WS/install/setup.sh && \
        --symlink-install \
        --cmake-args \
          -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE
-ENV ROS_PACKAGE_PATH=$TB3_OVERLAY_WS/install:$ROS_PACKAGE_PATH
 
 # source overlay workspace from entrypoint
 RUN sed --in-place \
