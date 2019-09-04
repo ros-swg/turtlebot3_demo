@@ -1,15 +1,37 @@
-# tb3_demo
-Repository to build and test Turtlebot3 packages
+# Secure Turtlebot3 Demo
 
+This repository includes a demo for securing a simulated Turtlebot3 using SROS2; including sensor and control topics as well the relevant portions of the cartographer and navigation2 software stacks.
 
-For instructions on how to build, please follow the building steps of the [dockerfile](docker/Dockerfile)
+## Setting the Demo
+
+To run this demo using docker, the following dependencies are required:
+
+* [ubuntu](https://ubuntu.com/)
+  * Other linux distros may work, but we'll focus on ubuntu.
+* [docker](https://www.docker.com/)
+  * Prior to workshop, please pull this image ahead of time:
+  * `docker pull ros-swg/turtlebot3_demo:roscon19`
+* [rocker](https://github.com/osrf/rocker)
+  * Please ensure display forwarding is working in rocker.
+  * [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) is also useful for those with a GPU.
+  
+  For those who can't use linux containers or for detailed instructions on how to build, you may still follow the general build steps of the [Dockerfile](Dockerfile).
 
 ## Running the demo:
+
+Start by launching a container into [byobu](http://www.byobu.org/). Byobu is simple wrapper for tmux, where the `F2` key creates and new window, and  `F3`/`F4` move focus among windows, and `Shift-<arrow-keys>` to move focus among window splits. Use `Shift-F1` to displays all keybindings. Omit the `--nvidia` arg if you don't have dedicated GPU for hardware acceleration of 3D OpenGL views:
+
+``` bash
+rocker --x11 --nvidia ros-swg/tb3-demo:dashing "byobu -f configs/unsecure.conf attach"
+```
 
 The following environment variables will be used in the instructions.
 You can set them in your bashrc to save some time or define them in theterminal used for the demo
 
 ```bash
+docker pull ros-swg/turtlebot3_demo:roscon19
+rocker --x11 --network=host ros-swg/turtlebot3_demo:roscon19
+
 export TB3_DEMO_DIR=$HOME/tb3_demo_roscon2019
 export TB3_UNDERLAY_WS=$TB3_DEMO_DIR/tb3_underlay_ws
 export TB3_OVERLAY_WS=$TB3_DEMO_DIR/tb3_overlay_ws
