@@ -61,4 +61,5 @@ RUN sed --in-place \
     echo 'source "$TB3_OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
 
 ENV TURTLEBOT3_MODEL burger
-# CMD ["byobu"]
+ENV GAZEBO_MODEL_PATH $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
+CMD ["byobu"]
