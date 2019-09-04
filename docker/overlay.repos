@@ -15,3 +15,7 @@ repositories:
     type: git
     url: https://github.com/ros2/cartographer_ros.git
     version: dashing
+  ros2/sros2:
+    type: git
+    url: https://github.com/ros2/sros2.git
+    version: master

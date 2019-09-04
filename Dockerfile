@@ -19,6 +19,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
         src \
       --ignore-src \
         --skip-keys "\
+            ament_mypy \
             dynamixel_sdk \
             hls_lfcd_lds_driver \
             turtlebot3_lidar \
