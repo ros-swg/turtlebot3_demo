@@ -1,35 +1,9 @@
-ARG FROM_IMAGE=rosplanning/navigation2:master.release
-FROM $FROM_IMAGE
+FROM ros:dashing
 
-RUN apt purge python3-rosdep -y && \
+# patch rosdep for ament
+RUN rosdep update && \
+    apt-get purge python3-rosdep -y && \
     pip3 install git+https://github.com/ruffsl/rosdep.git@ament
-
-# clone underlay package repos
-ENV TB3_UNDERLAY_WS /opt/tb3_underlay_ws
-RUN mkdir -p $TB3_UNDERLAY_WS/src
-WORKDIR $TB3_UNDERLAY_WS
-COPY ./docker/underlay.repos ./
-RUN vcs import src < underlay.repos
-# RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
-
-# install underlay package dependencies
-RUN . $OVERLAY_WS/install/setup.sh && \
-    apt-get update && rosdep install -q -y \
-      --from-paths \
-        src \
-      --ignore-src \
-        --skip-keys "\
-            libopensplice69 \
-            rti-connext-dds-5.3.1" \
-    && rm -rf /var/lib/apt/lists/*
-
-# build underlay package source
-ARG TB3_UNDERLAY_MIXINS="release"
-RUN . $OVERLAY_WS/install/setup.sh && \
-    colcon build \
-      --symlink-install \
-      --mixin \
-        $TB3_UNDERLAY_MIXINS
 
 # clone overlay package repos
 ENV TB3_OVERLAY_WS /opt/tb3_overlay_ws
@@ -39,7 +13,7 @@ COPY ./docker/overlay.repos ./
 RUN vcs import src < overlay.repos
 
 # install overlay package dependencies
-RUN . $TB3_UNDERLAY_WS/install/setup.sh && \
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths \
         src \
@@ -53,20 +27,38 @@ RUN . $TB3_UNDERLAY_WS/install/setup.sh && \
     && rm -rf /var/lib/apt/lists/*
 
 # build overlay package source
-ARG TB3_OVERLAY_MIXINS="release"
 RUN touch $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_node/COLCON_IGNORE
-RUN . $TB3_UNDERLAY_WS/install/setup.sh && \
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
-      --symlink-install \
-      --mixin \
-        $TB3_OVERLAY_MIXINS
+      --symlink-install
+
+# install helpful developer tools
+RUN apt-get update && apt-get install -y \
+      bash-completion \
+      byobu \
+      glances \
+      nano \
+      python3-argcomplete \
+      tmux \
+      tree \
+    && rm -rf /var/lib/apt/lists/*
+
+# generate artifacts for keystore
+WORKDIR $TB3_OVERLAY_WS
+COPY ./maps ./maps
+COPY ./policies ./policies
+RUN . $TB3_OVERLAY_WS/install/setup.sh && \
+    ros2 security generate_artifacts -k keystore \
+      -p policies/tb3_gazebo_policy.xml \
+      -n \
+        /_client_node
 
 # source overlay workspace from entrypoint
 RUN sed --in-place \
       's|^source .*|source "$TB3_OVERLAY_WS/install/setup.bash"|' \
-      /ros_entrypoint.sh
+      /ros_entrypoint.sh && \
+    cp /etc/skel/.bashrc ~/ && \
+    echo 'source "$TB3_OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
 
-WORKDIR $TB3_OVERLAY_WS
-COPY ./maps ./policies ./
 ENV TURTLEBOT3_MODEL burger
-ENV TB3_POLICY_FILE $TB3_OVERLAY_WS/policies/tb3_gazebo_policy.xml
+# CMD ["byobu"]
