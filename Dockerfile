@@ -1,4 +1,4 @@
-FROM ros:dashing
+FROM osrf/ros:dashing-desktop
 
 # patch rosdep for ament
 RUN rosdep update && \
