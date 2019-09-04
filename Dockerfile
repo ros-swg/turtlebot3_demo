@@ -14,7 +14,7 @@ RUN vcs import src < overlay.repos
 
 # install overlay package dependencies
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get update && rosdep install -q -y \
+    apt-get update && rosdep install -y \
       --from-paths \
         src \
       --ignore-src \
@@ -44,14 +44,17 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # generate artifacts for keystore
-WORKDIR $TB3_OVERLAY_WS
-COPY ./maps ./maps
-COPY ./policies ./policies
+ENV TB3_DEMO_DIR $TB3_OVERLAY_WS/..
+WORKDIR $TB3_DEMO_DIR
+COPY policies policies
 RUN . $TB3_OVERLAY_WS/install/setup.sh && \
     ros2 security generate_artifacts -k keystore \
-      -p policies/tb3_gazebo_policy.xml \
-      -n \
-        /_client_node
+      -p policies/tb3_gazebo_policy.xml
+
+# copy demo files
+COPY maps maps
+COPY configs configs
+COPY .gazebo /root/.gazebo
 
 # source overlay workspace from entrypoint
 RUN sed --in-place \
