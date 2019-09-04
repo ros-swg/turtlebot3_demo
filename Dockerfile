@@ -37,11 +37,13 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
 RUN apt-get update && apt-get install -y \
       bash-completion \
       byobu \
+      fish \
       glances \
       nano \
       python3-argcomplete \
-      tmux \
+      tmuxinator \
       tree \
+    && cd /usr/bin && curl https://getmic.ro | bash \
     && rm -rf /var/lib/apt/lists/*
 
 # generate artifacts for keystore
@@ -56,6 +58,7 @@ RUN . $TB3_OVERLAY_WS/install/setup.sh && \
 COPY maps maps
 COPY configs configs
 COPY .gazebo /root/.gazebo
+COPY .tmuxinator /root/.tmuxinator
 
 # source overlay workspace from entrypoint
 RUN sed --in-place \
@@ -64,6 +67,7 @@ RUN sed --in-place \
     cp /etc/skel/.bashrc ~/ && \
     echo 'source "$TB3_OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
 
-ENV TURTLEBOT3_MODEL burger
-ENV GAZEBO_MODEL_PATH $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
+ENV EDITOR='micro' \
+    TURTLEBOT3_MODEL='burger' \
+    GAZEBO_MODEL_PATH=$TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
 CMD ["byobu"]
