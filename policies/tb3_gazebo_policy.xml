@@ -743,12 +743,6 @@
         <topic>rosout</topic>
       </topics>
       <topics subscribe="ALLOW">
-        <topic>map</topic>
-        <topic>map_updates</topic>
-        <topic>parameter_events</topic>
-        <topic>scan_matched_points2</topic>
-        <topic>tf</topic>
-        <topic>tf_static</topic>
         <topic>clock</topic>
         <topic>endpoints</topic>
         <topic>endpoints_array</topic>
@@ -758,12 +752,17 @@
         <topic>local_costmap/costmap_updates</topic>
         <topic>local_costmap/published_footprint</topic>
         <topic>local_plan</topic>
+        <topic>map</topic>
+        <topic>map_updates</topic>
         <topic>marker</topic>
         <topic>mobile_base/sensors/bumper_pointcloud</topic>
+        <topic>parameter_events</topic>
         <topic>particlecloud</topic>
         <topic>plan</topic>
         <topic>robot_description</topic>
         <topic>scan</topic>
+        <topic>tf</topic>
+        <topic>tf_static</topic>
         <topic>visualization_marker_array</topic>
       </topics>
     </profile>
