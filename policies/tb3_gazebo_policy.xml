@@ -692,6 +692,7 @@
         <topic>rosout</topic>
       </topics>
       <topics subscribe="ALLOW">
+        <topic>clock</topic>
         <topic>parameter_events</topic>
       </topics>
     </profile>
