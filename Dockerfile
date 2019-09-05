@@ -1,4 +1,5 @@
 FROM osrf/ros:dashing-desktop
+# FROM osrf/ros2:nightly
 
 # patch rosdep for ament
 RUN rosdep update && \
@@ -11,6 +12,7 @@ RUN mkdir -p $TB3_OVERLAY_WS/src
 WORKDIR $TB3_OVERLAY_WS
 COPY ./docker/overlay.repos ./
 RUN vcs import src < overlay.repos
+# RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
 
 # install overlay package dependencies
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
