@@ -43,7 +43,6 @@ RUN apt-get update && apt-get install -y \
       glances \
       nano \
       python3-argcomplete \
-      tmuxinator \
       tree \
     && cd /usr/bin && curl https://getmic.ro | bash \
     && rm -rf /var/lib/apt/lists/*
@@ -60,7 +59,6 @@ RUN . $TB3_OVERLAY_WS/install/setup.sh && \
 COPY maps maps
 COPY configs configs
 COPY .gazebo /root/.gazebo
-COPY .tmuxinator /root/.tmuxinator
 
 # source overlay workspace from entrypoint
 RUN sed --in-place \
