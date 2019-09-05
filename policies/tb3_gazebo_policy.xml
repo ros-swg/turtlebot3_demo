@@ -258,6 +258,10 @@
         <service>~/list_parameters</service>
         <service>~/set_parameters</service>
         <service>~/set_parameters_atomically</service>
+        <service>pause_physics</service>
+        <service>reset_simulation</service>
+        <service>reset_world</service>
+        <service>unpause_physics</service>
       </services>
       <topics publish="ALLOW">
         <topic>clock</topic>
