@@ -24,7 +24,7 @@ windows:
       layout: main-vertical
       panes:
         - turtlebot:
-          - ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=maps/map_original.yaml
+          - ros2 launch turtlebot3_navigation2 navigation2.launch.py use_sim_time:=true map:=maps/map.yaml
         - teleop:
           - echo configs/initial_pose.sh
         - echo:
