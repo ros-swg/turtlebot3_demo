@@ -1,6 +1,6 @@
 <policy version="0.1.0">
   <profiles>
-    <profile node="_global_costmap_clear_entirely_global_costmap_Node_42432404" ns="/">
+    <profile node="_global_costmap_clear_entirely_global_costmap_Node_" ns="/">
       <services request="ALLOW">
         <service>global_costmap/clear_entirely_global_costmap</service>
       </services>
@@ -12,31 +12,7 @@
         <topic>parameter_events</topic>
       </topics>
     </profile>
-    <profile node="_global_costmap_clear_entirely_global_costmap_Node_73596424" ns="/">
-      <services request="ALLOW">
-        <service>global_costmap/clear_entirely_global_costmap</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-    </profile>
-    <profile node="_local_costmap_clear_entirely_local_costmap_Node_25801372" ns="/">
-      <services request="ALLOW">
-        <service>local_costmap/clear_entirely_local_costmap</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-    </profile>
-    <profile node="_local_costmap_clear_entirely_local_costmap_Node_68691229" ns="/">
+    <profile node="_local_costmap_clear_entirely_local_costmap_Node_" ns="/">
       <services request="ALLOW">
         <service>local_costmap/clear_entirely_local_costmap</service>
       </services>
