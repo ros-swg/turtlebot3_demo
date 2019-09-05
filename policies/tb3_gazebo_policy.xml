@@ -1,5 +1,16 @@
 <policy version="0.1.0">
   <profiles>
+    <profile node="_ros2cli" ns="/">
+      <services reply="ALLOW" request="ALLOW">
+        <service>*</service>
+      </services>
+      <topics publish="ALLOW" subscribe="ALLOW">
+        <topic>*</topic>
+      </topics>
+      <actions call="ALLOW" execute="ALLOW">
+        <action>*</action>
+      </actions>
+    </profile>
     <profile node="_global_costmap_clear_entirely_global_costmap_Node_" ns="/">
       <services request="ALLOW">
         <service>global_costmap/clear_entirely_global_costmap</service>
