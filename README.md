@@ -53,7 +53,7 @@ Byobu starts a new session and launch the turtlebot3 demo over several windows:
 
 You can first localize the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window pains. This can also be done graphically via rviz. Feel free to poke around, open a new window and list or echo topics and services. For example, you can stop the navigation2 launch file running map server and and start cartographer from the mapping window to create and then save your own map, then stop cartographer and restart navigation2.
 
-![](media/tb3_demo_localize.gif)
+[![](media/localize.png)](media/localize.mkv)
 
 ## Running the secure demo:
 
