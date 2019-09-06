@@ -10,7 +10,7 @@ RUN rosdep update && \
 ENV TB3_OVERLAY_WS /opt/tb3_overlay_ws
 RUN mkdir -p $TB3_OVERLAY_WS/src
 WORKDIR $TB3_OVERLAY_WS
-COPY ./docker/overlay.repos ./
+COPY .docker/overlay.repos ./
 RUN vcs import src < overlay.repos
 # RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
 
