@@ -634,6 +634,7 @@
         <topic>rosout</topic>
       </topics>
       <topics subscribe="ALLOW">
+        <topic>clock</topic>
         <topic>parameter_events</topic>
       </topics>
     </profile>
@@ -747,9 +748,7 @@
       </services>
       <topics publish="ALLOW">
         <topic>clicked_point</topic>
-        <topic>goal</topic>
         <topic>initialpose</topic>
-        <topic>move_base_simple/goal</topic>
         <topic>parameter_events</topic>
         <topic>rosout</topic>
       </topics>
