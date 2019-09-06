@@ -67,7 +67,5 @@ RUN sed --in-place \
     cp /etc/skel/.bashrc ~/ && \
     echo 'source "$TB3_OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
 
-ENV EDITOR='micro' \
-    TURTLEBOT3_MODEL='burger' \
+ENV TURTLEBOT3_MODEL='burger' \
     GAZEBO_MODEL_PATH=$TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
-CMD ["byobu"]
