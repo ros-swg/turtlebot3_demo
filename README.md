@@ -28,6 +28,8 @@ rocker --x11 --nvidia rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure
 
 > Note: If byobu doesn't expand to the entire terminal window, just signal the current xterm size by resizing the shape of the terminal window on your desktop or increase/decrease font size.
 
+![](media/startup.png)
+
 Byobu starts a new session and launch the turtlebot3 demo over several windows:
 
 * `turtlebot`
@@ -50,6 +52,8 @@ Byobu starts a new session and launch the turtlebot3 demo over several windows:
   * glance overview of containerized processes
 
 You can first localize the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window pains. This can also be done graphically via rviz. Feel free to poke around, open a new window and list or echo topics and services. For example, you can stop the navigation2 launch file running map server and and start cartographer from the mapping window to create and then save your own map, then stop cartographer and restart navigation2.
+
+![](media/tb3_demo_localize.gif)
 
 ## Running the secure demo:
 
