@@ -16,21 +16,23 @@ RUN vcs import src < overlay.repos
 
 # install overlay package dependencies
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get update && rosdep install -y \
+    apt-get update && apt-get install -y \
+      ros-$ROS_DISTRO-turtlebot3-cartographer \
+      ros-$ROS_DISTRO-turtlebot3-navigation2 \
+      ros-$ROS_DISTRO-turtlebot3-simulations \
+      ros-$ROS_DISTRO-turtlebot3-teleop \
+    && rosdep install -y \
       --from-paths \
         src \
       --ignore-src \
         --skip-keys "\
             ament_mypy \
-            dynamixel_sdk \
-            hls_lfcd_lds_driver \
-            turtlebot3_lidar \
             libopensplice69 \
             rti-connext-dds-5.3.1" \
     && rm -rf /var/lib/apt/lists/*
 
 # build overlay package source
-RUN touch $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_node/COLCON_IGNORE
+# RUN touch $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_node/COLCON_IGNORE
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install
@@ -68,4 +70,4 @@ RUN sed --in-place \
     echo 'source "$TB3_OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
 
 ENV TURTLEBOT3_MODEL='burger' \
-    GAZEBO_MODEL_PATH=$TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_simulations/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
+    GAZEBO_MODEL_PATH=/opt/ros/$ROS_DISTRO/share/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
