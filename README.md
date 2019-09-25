@@ -142,3 +142,34 @@ export ROS_SECURITY_ENABLE=true
 ```
 
 Now try starting another teleop node with security disabled and check that only the secure teleop node can drive the robot.
+
+# Security Workshop Sandbox Node Demo
+
+The [ROSCon 2019](https://ros-swg.github.io/ROSCon19_Security_Workshop/) [ROS2 Security Workshop](https://ros-swg.github.io/ROSCon19_Security_Workshop/)
+will present the opportunity to run the Turtlebot3 demo using the [launch-ros-sandbox](https://github.com/aws-robotics/launch-ros-sandbox)
+package. Specifically, the demo uses this package to launch the Turtlebot3 navigation nodes in a docker container. See the 
+configs/sandbox_demo/navigation_sandbox.launch.py launch file for details.
+
+## Running the Security Workshop Sandbox Node Demo
+
+Build the docker image required using the dockerfile from this repository
+
+``` bash
+git clone git@github.com:ros-swg/turtlebot3_demo.git
+cd turtlebot3_demo
+docker build . -t rosswg:turtlebot3_sandbox_demo
+```
+
+Once the image is built, we can run it with the following command:
+
+``` bash
+rocker --x11 --nvidia rosswg:turtlebot3_sandbox_demo "byobu -f configs/sandbox_demo/unsecure.conf attach"
+```
+
+Omit the `--nvidia` arg if you don't have dedicated GPU for hardware acceleration of 3D OpenGL views.
+
+Likewise, the following command is used to run the demo using the secure config:
+
+``` bash
+rocker --x11 --nvidia  rosswg:turtlebot3_sandbox_demo "byobu -f configs/sandbox_demo/secure.conf attach"
+```

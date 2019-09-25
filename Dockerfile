@@ -46,6 +46,7 @@ RUN apt-get update && apt-get install -y \
       nano \
       python3-argcomplete \
       tree \
+      vim \
     && cd /usr/bin && curl https://getmic.ro | bash \
     && rm -rf /var/lib/apt/lists/*
 
