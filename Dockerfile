@@ -12,6 +12,8 @@ RUN mkdir -p $TB3_OVERLAY_WS/src
 WORKDIR $TB3_OVERLAY_WS
 COPY .docker/overlay.repos ./
 RUN vcs import src < overlay.repos
+# extra package from this repo
+COPY example_nodes src/
 # RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
 
 # install overlay package dependencies
