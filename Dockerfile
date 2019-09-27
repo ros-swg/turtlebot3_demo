@@ -1,11 +1,6 @@
 FROM osrf/ros:dashing-desktop
 # FROM osrf/ros2:nightly
 
-# patch rosdep for ament
-RUN rosdep update && \
-    apt-get purge python3-rosdep -y && \
-    pip3 install git+https://github.com/ruffsl/rosdep.git@ament
-
 # install helpful developer tools
 RUN apt-get update && apt-get install -y \
       bash-completion \
