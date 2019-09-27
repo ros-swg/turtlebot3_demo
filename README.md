@@ -49,7 +49,7 @@ Byobu starts a new session and launch the turtlebot3 demo over several windows:
 * `diagnostic`
   * glance overview of containerized processes
 
-You can first localize the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window pains. This can also be done graphically via rviz. Feel free to poke around, open a new window and list or echo topics and services. For example, you can stop the navigation2 launch file running map server and and start cartographer from the mapping window to create and then save your own map, then stop cartographer and restart navigation2.
+You can first localize the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz. Feel free to poke around, open a new window and list or echo topics and services. For example, you can stop the navigation2 launch file running map server and and start cartographer from the mapping window to create and then save your own map, then stop cartographer and restart navigation2.
 
 [![](media/localize.png)](media/localize.mp4)
 
@@ -141,27 +141,17 @@ export ROS_SECURITY_ENABLE=true
 
 Now try starting another teleop node with security disabled and check that only the secure teleop node can drive the robot.
 
-# Security Workshop Sandbox Node Demo
+## Sandboxed Nodes Demo
 
 The [ROSCon 2019](https://ros-swg.github.io/ROSCon19_Security_Workshop/) [ROS2 Security Workshop](https://ros-swg.github.io/ROSCon19_Security_Workshop/)
 will present the opportunity to run the Turtlebot3 demo using the [launch-ros-sandbox](https://github.com/aws-robotics/launch-ros-sandbox)
 package. Specifically, the demo uses this package to launch the Turtlebot3 navigation nodes in a docker container. See the
 configs/sandbox_demo/navigation_sandbox.launch.py launch file for details.
 
-## Running the Security Workshop Sandbox Node Demo
-
-Build the docker image required using the dockerfile from this repository
+### Running the Security Workshop Sandbox Node Demo
 
 ``` bash
-git clone git@github.com:ros-swg/turtlebot3_demo.git
-cd turtlebot3_demo
-docker build . -t ros-swg/turtlebot3_demo
-```
-
-Once the image is built, we can run it with the following command:
-
-``` bash
-rocker --x11 --nvidia ros-swg/turtlebot3_demo "byobu -f configs/sandbox_demo/unsecure.conf attach"
+rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/unsecure.conf attach"
 ```
 
 Omit the `--nvidia` arg if you don't have dedicated GPU for hardware acceleration of 3D OpenGL views.
@@ -169,8 +159,7 @@ Omit the `--nvidia` arg if you don't have dedicated GPU for hardware acceleratio
 Likewise, the following command is used to run the demo using the secure config:
 
 ``` bash
-
-rocker --x11 --nvidia  rosswg/turtlebot3_sandbox_demo "byobu -f configs/sandbox_demo/secure.conf attach"
+rocker --x11 --nvidia  rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/secure.conf attach"
 ```
 
 ### Demonstrating Sandbox Resource Limits
@@ -186,4 +175,12 @@ This is a contrived example - but it illustrates what could happen if a node tha
 If you run the command, you can see the CPU of your system jump to 100% usage, grinding everything else to a halt.
 
 UPCOMING: Show usage of `launch_ros_sandbox` resource limits to keep the demo running happily.
->>>>>>> Add argument for how many processes, and document how to use
+
+## Developing
+To rebuild this demo locally if you are working on it, you can rebuild the Docker image with the same tag, so all above demo commands will work correctly.
+
+``` bash
+git clone git@github.com:ros-swg/turtlebot3_demo.git
+cd turtlebot3_demo
+docker build . -t rosswg/turtlebot3_demo
+```
