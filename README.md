@@ -26,8 +26,6 @@ Start by attaching to a byobu session in a new container using rocker. [Byobu](h
 rocker --x11 --nvidia rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
 ```
 
-> Note: If byobu doesn't expand to the entire terminal window, just signal the current xterm size by resizing the shape of the terminal window on your desktop or increase/decrease font size.
-
 ![](media/startup.png)
 
 Byobu starts a new session and launch the turtlebot3 demo over several windows:
