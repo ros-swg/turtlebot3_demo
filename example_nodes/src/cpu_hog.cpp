@@ -81,7 +81,19 @@ int start_hogs(uint forks)
 }
 
 
-int main(int /* argc */, char ** /* argv */)
+int main(int argc, char ** argv)
 {
-  return start_hogs(4);
+  int num_processes = 4;
+  if (argc == 2) {
+    num_processes = atoi(argv[1]);
+  } else if (argc > 2) {
+    RCUTILS_LOG_ERROR("Usage: cpu_hog [NUM_PROCESSES]");
+    return 1;
+  }
+  if (num_processes <= 0) {
+    RCUTILS_LOG_ERROR("NUM_PROCESSES must be greater than 0");
+    return 1;
+  }
+  RCUTILS_LOG_INFO("Forking %d cpu hogs", num_processes);
+  return start_hogs(num_processes);
 }
