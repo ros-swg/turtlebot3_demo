@@ -15,7 +15,7 @@ To run this demo using docker, the following dependencies are required:
 * [rocker](https://github.com/osrf/rocker)
   * Please ensure display forwarding is working with rocker.
   * [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) is also useful for those with a GPU.
-  
+
   For those who can't use linux containers or for detailed instructions on how to build, you may still follow the general build steps of the [Dockerfile](Dockerfile).
 
 ## Running the demo:
@@ -49,7 +49,7 @@ Byobu starts a new session and launch the turtlebot3 demo over several windows:
 * `diagnostic`
   * glance overview of containerized processes
 
-You can first localize the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window pains. This can also be done graphically via rviz. Feel free to poke around, open a new window and list or echo topics and services. For example, you can stop the navigation2 launch file running map server and and start cartographer from the mapping window to create and then save your own map, then stop cartographer and restart navigation2.
+You can first localize the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz. Feel free to poke around, open a new window and list or echo topics and services. For example, you can stop the navigation2 launch file running map server and and start cartographer from the mapping window to create and then save your own map, then stop cartographer and restart navigation2.
 
 [![](media/localize.png)](media/localize.mp4)
 
@@ -70,7 +70,7 @@ export ROS_SECURITY_ROOT_DIRECTORY=$TB3_DEMO_DIR/keystore
 export ROS_SECURITY_LOOKUP_TYPE=MATCH_PREFIX
 ```
 
-These variables simply enable as well as enforce security for all ros2 nodes while specifying the lookup path/strategy for loading key and access control artifacts. For more details on what secure options exist and what each is for, please view the design doc here: 
+These variables simply enable as well as enforce security for all ros2 nodes while specifying the lookup path/strategy for loading key and access control artifacts. For more details on what secure options exist and what each is for, please view the design doc here:
 
 * https://design.ros2.org/articles/ros2_dds_security.html
 
@@ -129,7 +129,7 @@ Next we can repopulated the keystore for all profiles via:
 ``` bash
 ros2 security generate_artifacts \
   -p policy/my_policy.xml \
-  -k keystore 
+  -k keystore
 ```
 
 Finally, go back and re-enable security and restart simulation and the teleop nodes.
@@ -141,27 +141,17 @@ export ROS_SECURITY_ENABLE=true
 
 Now try starting another teleop node with security disabled and check that only the secure teleop node can drive the robot.
 
-# Security Workshop Sandbox Node Demo
+## Sandboxed Nodes Demo
 
 The [ROSCon 2019](https://ros-swg.github.io/ROSCon19_Security_Workshop/) [ROS2 Security Workshop](https://ros-swg.github.io/ROSCon19_Security_Workshop/)
 will present the opportunity to run the Turtlebot3 demo using the [launch-ros-sandbox](https://github.com/aws-robotics/launch-ros-sandbox)
-package. Specifically, the demo uses this package to launch the Turtlebot3 navigation nodes in a docker container. See the 
+package. Specifically, the demo uses this package to launch the Turtlebot3 navigation nodes in a docker container. See the
 configs/sandbox_demo/navigation_sandbox.launch.py launch file for details.
 
-## Running the Security Workshop Sandbox Node Demo
-
-Build the docker image required using the dockerfile from this repository
+### Running the Security Workshop Sandbox Node Demo
 
 ``` bash
-git clone git@github.com:ros-swg/turtlebot3_demo.git
-cd turtlebot3_demo
-docker build . -t rosswg:turtlebot3_sandbox_demo
-```
-
-Once the image is built, we can run it with the following command:
-
-``` bash
-rocker --x11 --nvidia rosswg:turtlebot3_sandbox_demo "byobu -f configs/sandbox_demo/unsecure.conf attach"
+rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/unsecure.conf attach"
 ```
 
 Omit the `--nvidia` arg if you don't have dedicated GPU for hardware acceleration of 3D OpenGL views.
@@ -169,5 +159,28 @@ Omit the `--nvidia` arg if you don't have dedicated GPU for hardware acceleratio
 Likewise, the following command is used to run the demo using the secure config:
 
 ``` bash
-rocker --x11 --nvidia  rosswg:turtlebot3_sandbox_demo "byobu -f configs/sandbox_demo/secure.conf attach"
+rocker --x11 --nvidia  rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/secure.conf attach"
+```
+
+### Demonstrating Sandbox Resource Limits
+
+This demo shows how robot code, acting improperly, can negatively affect the entire robotic system.
+
+``` bash
+rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/bad_actor.conf attach"
+```
+
+After launching with the above config, there is a command ready in the `bad_actor` byobu window, ready to run a cpu hog that will fork many busy processes (`ros2 run example_nodes cpu_hog 8`).
+This is a contrived example - but it illustrates what could happen if a node that you are using hits an untested code path and goes into an infinite loop.
+If you run the command, you can see the CPU of your system jump to 100% usage, grinding everything else to a halt.
+
+UPCOMING: Show usage of `launch_ros_sandbox` resource limits to keep the demo running happily.
+
+## Developing
+To rebuild this demo locally if you are working on it, you can rebuild the Docker image with the same tag, so all above demo commands will work correctly.
+
+``` bash
+git clone git@github.com:ros-swg/turtlebot3_demo.git
+cd turtlebot3_demo
+docker build . -t rosswg/turtlebot3_demo
 ```

@@ -6,37 +6,6 @@ RUN rosdep update && \
     apt-get purge python3-rosdep -y && \
     pip3 install git+https://github.com/ruffsl/rosdep.git@ament
 
-# clone overlay package repos
-ENV TB3_OVERLAY_WS /opt/tb3_overlay_ws
-RUN mkdir -p $TB3_OVERLAY_WS/src
-WORKDIR $TB3_OVERLAY_WS
-COPY .docker/overlay.repos ./
-RUN vcs import src < overlay.repos
-# RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
-
-# install overlay package dependencies
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get update && apt-get install -y \
-      ros-$ROS_DISTRO-turtlebot3-cartographer \
-      ros-$ROS_DISTRO-turtlebot3-navigation2 \
-      ros-$ROS_DISTRO-turtlebot3-simulations \
-      ros-$ROS_DISTRO-turtlebot3-teleop \
-    && rosdep install -y \
-      --from-paths \
-        src \
-      --ignore-src \
-        --skip-keys "\
-            ament_mypy \
-            libopensplice69 \
-            rti-connext-dds-5.3.1" \
-    && rm -rf /var/lib/apt/lists/*
-
-# build overlay package source
-# RUN touch $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_node/COLCON_IGNORE
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    colcon build \
-      --symlink-install
-
 # install helpful developer tools
 RUN apt-get update && apt-get install -y \
       bash-completion \
@@ -49,6 +18,42 @@ RUN apt-get update && apt-get install -y \
       vim \
     && cd /usr/bin && curl https://getmic.ro | bash \
     && rm -rf /var/lib/apt/lists/*
+
+# install turtlebot external packages
+RUN apt-get update && apt-get install -y \
+      ros-$ROS_DISTRO-turtlebot3-cartographer \
+      ros-$ROS_DISTRO-turtlebot3-navigation2 \
+      ros-$ROS_DISTRO-turtlebot3-simulations \
+      ros-$ROS_DISTRO-turtlebot3-teleop \
+    && rm -rf /var/lib/apt/lists/*
+
+# clone overlay package repos
+ENV TB3_OVERLAY_WS /opt/tb3_overlay_ws
+RUN mkdir -p $TB3_OVERLAY_WS/src
+WORKDIR $TB3_OVERLAY_WS
+COPY .docker/overlay.repos ./
+RUN vcs import src < overlay.repos
+# Install extra sources from this repo
+COPY example_nodes/ src/example_nodes
+# RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
+
+# install overlay package dependencies
+RUN . /opt/ros/$ROS_DISTRO/setup.sh \
+    && rosdep install -y \
+      --from-paths src \
+      --ignore-src \
+      --skip-keys " \
+            ament_mypy \
+            libopensplice69 \
+            rti-connext-dds-5.3.1 \
+        " \
+    && rm -rf /var/lib/apt/lists/*
+
+# build overlay package source
+# RUN touch $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_node/COLCON_IGNORE
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
+    colcon build \
+      --symlink-install
 
 # generate artifacts for keystore
 ENV TB3_DEMO_DIR $TB3_OVERLAY_WS/..
