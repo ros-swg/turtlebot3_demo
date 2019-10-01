@@ -22,6 +22,9 @@ disrupt the performance of the navigation demo.
 
 For more details please see the launch_ros_sandbox project at
 https://github.com/aws-robotics/launch-ros-sandbox
+
+For more information on configurable resource limits, see the `docker run` documentation
+https://docs.docker.com/engine/reference/run/#runtime-constraints-on-resources
 """
 import os
 
@@ -41,11 +44,14 @@ def generate_launch_description():
         arguments=['32'],
     )
     container = SandboxedNodeContainer(
-        sandbox_name='bad_actor',
+        sandbox_name='bad_actor_sandbox',
         policy=DockerPolicy(
             tag='roscon19',
             repository='rosswg/turtlebot3_demo',
-            container_name='turtlebot3_navigation',
+            container_name='bad_actor',
+            # run_args={
+            #     'cpus': '8',
+            # }
         ),
         node_descriptions=[node],
     )
