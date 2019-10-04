@@ -26,34 +26,47 @@ https://github.com/aws-robotics/launch-ros-sandbox
 For more information on configurable resource limits, see the `docker run` documentation
 https://docs.docker.com/engine/reference/run/#runtime-constraints-on-resources
 """
-import os
-
 from launch import LaunchDescription
 
 from launch_ros_sandbox.actions import SandboxedNodeContainer
 from launch_ros_sandbox.descriptions import DockerPolicy
 from launch_ros_sandbox.descriptions import SandboxedNode
 
-TURTLEBOT3_MODEL = os.environ['TURTLEBOT3_MODEL']
-
 
 def generate_launch_description():
-    node = SandboxedNode(
-        package='example_nodes',
-        node_executable='cpu_hog',
-        arguments=['32'],
-    )
-    container = SandboxedNodeContainer(
-        sandbox_name='bad_actor_sandbox',
-        policy=DockerPolicy(
-            tag='roscon19',
-            repository='rosswg/turtlebot3_demo',
-            container_name='bad_actor',
-            # run_args={
-            #     'cpus': '8',
-            # }
-        ),
-        node_descriptions=[node],
+    ld = LaunchDescription()
+    ld.add_action(
+        SandboxedNodeContainer(
+            sandbox_name='my_sandbox',
+            policy=DockerPolicy(
+                tag='latest',
+                repository='rosswg/turtlebot3_demo',
+                container_name='sandboxed-cpu-hog',
+                run_args={
+                    # CPU quota, in microseconds per scheduler period.
+                    # The default scheduler period is 100ms == 100000us
+                    # Therefore the below value of 200000us limits this container to using,
+                    # at most, 2 cpu cores' worth of processing
+                    'cpu_period': 100000,
+                    'cpu_quota': 200000,
+                },
+                entrypoint='/ros_entrypoint.sh',
+            ),
+            node_descriptions=[
+                SandboxedNode(
+                    package='example_nodes',
+                    node_executable='cpu_hog',
+                ),
+            ]
+        )
     )
 
-    return LaunchDescription([container])
+    return ld
+
+
+if __name__ == '__main__':
+    import sys
+    from launch import LaunchService
+    ls = LaunchService(argv=sys.argv[1:], debug=True)
+    ls.include_launch_description(generate_launch_description())
+    sys.exit(ls.run())

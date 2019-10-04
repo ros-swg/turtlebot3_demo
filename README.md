@@ -170,11 +170,16 @@ This demo shows how robot code, acting improperly, can negatively affect the ent
 rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/bad_actor.conf attach"
 ```
 
-After launching with the above config, there is a command ready in the `bad_actor` byobu window, ready to run a cpu hog that will fork many busy processes (`ros2 run example_nodes cpu_hog 8`).
+After launching with the above config, there are two commands ready in the `bad_actor` byobu window.
+They are ready to run a cpu hog that will fork many busy processes.
 This is a contrived example - but it illustrates what could happen if a node that you are using hits an untested code path and goes into an infinite loop.
-If you run the command, you can see the CPU of your system jump to 100% usage, grinding everything else to a halt.
 
-UPCOMING: Show usage of `launch_ros_sandbox` resource limits to keep the demo running happily.
+If you run the top command (`ros2 run...`), you can see the CPU of your system jump to 100% usage, grinding everything else to a halt.
+
+However, if you kill that and run the bottom command (`ros2 launch ...`), it will launch inside a container that has a CPU resource limit set.
+This launch will be able to use at most 2 CPUs worth of processing, allowing the rest of the demo to still run at a normal speed.
+See `example_nodes/launch/sandboxed_cpu_hog.launch.py` for some more info on the arguments that make this happen.
+
 
 ## Developing
 To rebuild this demo locally if you are working on it, you can rebuild the Docker image with the same tag, so all above demo commands will work correctly.
