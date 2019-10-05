@@ -174,7 +174,7 @@ After launching with the above config, there are two commands ready in the `bad_
 They are ready to run a cpu hog that will fork many busy processes.
 This is a contrived example - but it illustrates what could happen if a node that you are using hits an untested code path and goes into an infinite loop.
 
-If you run the top command (`ros2 run...`), you can see the CPU of your system jump to 100% usage, grinding everything else to a halt.
+If you run the top command (`ros2 run...`), you can see the CPU of your system jump to 100% usage (check the `diagnostic` byobu window), grinding everything else to a halt.
 
 However, if you kill that and run the bottom command (`ros2 launch ...`), it will launch inside a container that has a CPU resource limit set.
 This launch will be able to use at most 2 CPUs worth of processing, allowing the rest of the demo to still run at a normal speed.
