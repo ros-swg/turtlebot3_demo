@@ -83,7 +83,7 @@ int start_hogs(uint forks)
 
 int main(int argc, char ** argv)
 {
-  int num_processes = 4;
+  int num_processes = 32;
   if (argc == 2) {
     num_processes = atoi(argv[1]);
   } else if (argc > 2) {
