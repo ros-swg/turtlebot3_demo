@@ -57,6 +57,12 @@ Feel free to poke around, open a new window and list or echo topics and services
 
 [![](media/localize.png)](media/localize.mp4)
 
+## Running the reconnaissance demo:
+
+``` bash
+rocker rosswg/turtlebot3_demo:roscon19 "byobu -f configs/reconnaissance_demo/unsecure.conf attach"
+```
+
 ## Running the secure demo:
 
 So far we've simply launched the turtlebot3 without using SROS2. To enable security, simply exit the previous byobu session and start a new one now using the secure config:
