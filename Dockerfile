@@ -63,6 +63,20 @@ RUN . $TB3_OVERLAY_WS/install/setup.sh && \
     ros2 security generate_artifacts -k keystore \
       -p policies/tb3_gazebo_policy.xml
 
+# install tools for footprinting and pentesting
+# RUN pip3 install aztarna
+WORKDIR /tmp
+RUN apt-get -qq update && apt-get -y install \
+      libgmp3-dev gengetopt \
+      libpcap-dev flex byacc \
+      libjson-c-dev unzip \
+      libunistring-dev wget \
+      libxml2-dev libxslt1-dev \
+      libffi-dev libssl-dev && \
+      rm -rf /var/lib/apt/lists/*
+RUN git clone https://github.com/aliasrobotics/aztarna && \
+      cd aztarna && python3 setup.py install
+
 # copy demo files
 COPY maps maps
 COPY configs configs
