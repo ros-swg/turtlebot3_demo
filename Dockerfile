@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y \
 
 # install turtlebot external packages
 RUN apt-get update && apt-get install -y \
+      ros-$ROS_DISTRO-rqt* \
       ros-$ROS_DISTRO-turtlebot3-cartographer \
       ros-$ROS_DISTRO-turtlebot3-navigation2 \
       ros-$ROS_DISTRO-turtlebot3-simulations \
