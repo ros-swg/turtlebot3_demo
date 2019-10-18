@@ -76,6 +76,8 @@ RUN apt-get -qq update && apt-get -y install \
       rm -rf /var/lib/apt/lists/*
 RUN git clone https://github.com/aliasrobotics/aztarna && \
       cd aztarna && python3 setup.py install
+# install wireshark
+RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -y install tshark
 
 # copy demo files
 COPY maps maps
