@@ -35,6 +35,7 @@ COPY example_nodes/ src/example_nodes
 
 # install overlay package dependencies
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
+    && rosdep update \
     && rosdep install -y \
       --from-paths src \
       --ignore-src \
