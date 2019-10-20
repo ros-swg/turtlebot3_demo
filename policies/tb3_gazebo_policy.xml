@@ -19,21 +19,6 @@
         <topic>parameter_events</topic>
         <topic>rosout</topic>
       </topics>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
-    </profile>
-    <profile node="_local_costmap_clear_entirely_local_costmap_Node_" ns="/">
-      <services request="ALLOW">
-        <service>local_costmap/clear_entirely_local_costmap</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-      </topics>
     </profile>
     <profile node="amcl" ns="/">
       <services reply="ALLOW">
@@ -48,7 +33,7 @@
         <service>~/list_parameters</service>
         <service>~/set_parameters</service>
         <service>~/set_parameters_atomically</service>
-        <service>global_localization</service>
+        <service>reinitialize_global_localization</service>
         <service>request_nomotion_update</service>
       </services>
       <topics publish="ALLOW">
@@ -126,27 +111,9 @@
         <service>~/set_parameters</service>
         <service>~/set_parameters_atomically</service>
       </services>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
-      <topics subscribe="ALLOW">
-        <topic>amcl_pose</topic>
-        <topic>odom</topic>
-        <topic>parameter_events</topic>
-      </topics>
-    </profile>
-    <profile node="bt_navigator_global_localization_client" ns="/">
-      <services reply="ALLOW">
-        <service>~/describe_parameters</service>
-        <service>~/get_parameter_types</service>
-        <service>~/get_parameters</service>
-        <service>~/list_parameters</service>
-        <service>~/set_parameters</service>
-        <service>~/set_parameters_atomically</service>
-      </services>
       <services request="ALLOW">
-        <service>global_localization</service>
+        <service>global_costmap/clear_entirely_global_costmap</service>
+        <service>local_costmap/clear_entirely_local_costmap</service>
       </services>
       <topics publish="ALLOW">
         <topic>parameter_events</topic>
@@ -545,7 +512,6 @@
         <service>~/set_parameters_atomically</service>
       </services>
       <topics publish="ALLOW">
-        <topic>endpoints</topic>
         <topic>~/transition_event</topic>
         <topic>parameter_events</topic>
         <topic>plan</topic>
@@ -554,40 +520,13 @@
       <topics subscribe="ALLOW">
         <topic>clock</topic>
         <topic>parameter_events</topic>
+        <topic>tf</topic>
+        <topic>tf_static</topic>
       </topics>
     </profile>
     <profile node="navfn_planner_GetCostmap_client" ns="/">
-      <services reply="ALLOW">
-        <service>~/describe_parameters</service>
-        <service>~/get_parameter_types</service>
-        <service>~/get_parameters</service>
-        <service>~/list_parameters</service>
-        <service>~/set_parameters</service>
-        <service>~/set_parameters_atomically</service>
-      </services>
       <services request="ALLOW">
         <service>GetCostmap</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
-      </topics>
-    </profile>
-    <profile node="navfn_planner_GetRobotPose_client" ns="/">
-      <services reply="ALLOW">
-        <service>~/describe_parameters</service>
-        <service>~/get_parameter_types</service>
-        <service>~/get_parameters</service>
-        <service>~/list_parameters</service>
-        <service>~/set_parameters</service>
-        <service>~/set_parameters_atomically</service>
-      </services>
-      <services request="ALLOW">
-        <service>GetRobotPose</service>
       </services>
       <topics publish="ALLOW">
         <topic>parameter_events</topic>
@@ -638,28 +577,6 @@
         <topic>parameter_events</topic>
       </topics>
     </profile>
-    <profile node="occupancy_grid_node" ns="/">
-      <services reply="ALLOW">
-        <service>~/describe_parameters</service>
-        <service>~/get_parameter_types</service>
-        <service>~/get_parameters</service>
-        <service>~/list_parameters</service>
-        <service>~/set_parameters</service>
-        <service>~/set_parameters_atomically</service>
-      </services>
-      <services request="ALLOW">
-        <service>submap_query</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>map</topic>
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
-      <topics subscribe="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>submap_list</topic>
-      </topics>
-    </profile>
     <profile node="recoveries" ns="/">
       <actions execute="ALLOW">
         <action>BackUp</action>
@@ -679,33 +596,12 @@
         <topic>rosout</topic>
       </topics>
       <topics subscribe="ALLOW">
-        <topic>amcl_pose</topic>
         <topic>clock</topic>
-        <topic>global_costmap/costmap_raw</topic>
-        <topic>global_costmap/published_footprint</topic>
-        <topic>odom</topic>
+        <topic>local_costmap/costmap_raw</topic>
+        <topic>local_costmap/published_footprint</topic>
         <topic>parameter_events</topic>
-      </topics>
-    </profile>
-    <profile node="recovery_GetRobotPose_client" ns="/">
-      <services reply="ALLOW">
-        <service>~/describe_parameters</service>
-        <service>~/get_parameter_types</service>
-        <service>~/get_parameters</service>
-        <service>~/list_parameters</service>
-        <service>~/set_parameters</service>
-        <service>~/set_parameters_atomically</service>
-      </services>
-      <services request="ALLOW">
-        <service>GetRobotPose</service>
-      </services>
-      <topics publish="ALLOW">
-        <topic>parameter_events</topic>
-        <topic>rosout</topic>
-      </topics>
-      <topics subscribe="ALLOW">
-        <topic>clock</topic>
-        <topic>parameter_events</topic>
+        <topic>tf</topic>
+        <topic>tf_static</topic>
       </topics>
     </profile>
     <profile node="robot_state_publisher" ns="/">
@@ -754,8 +650,6 @@
       </topics>
       <topics subscribe="ALLOW">
         <topic>clock</topic>
-        <topic>endpoints</topic>
-        <topic>endpoints_array</topic>
         <topic>global_costmap/costmap</topic>
         <topic>global_costmap/costmap_updates</topic>
         <topic>local_costmap/costmap</topic>
@@ -891,7 +785,6 @@
     <profile node="world_model" ns="/">
       <services reply="ALLOW">
         <service>GetCostmap</service>
-        <service>GetRobotPose</service>
         <service>~/change_state</service>
         <service>~/describe_parameters</service>
         <service>~/get_available_states</service>
