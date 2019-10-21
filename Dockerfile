@@ -74,8 +74,11 @@ RUN apt-get -qq update && apt-get -y install \
       rm -rf /var/lib/apt/lists/*
 RUN git clone https://github.com/aliasrobotics/aztarna && \
       cd aztarna && python3 setup.py install
-# install wireshark
+# install tshark
 RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -y install tshark
+
+# set the working directory back to its previous status
+WORKDIR $TB3_DEMO_DIR
 
 # copy demo files
 COPY maps maps
