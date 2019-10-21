@@ -1,16 +1,16 @@
 repositories:
-  # turtlebot3:
+  # turtlebot3/turtlebot3:
   #   type: git
-  #   url: https://github.com/ROBOTIS-GIT/turtlebot3
-  #   version: ros2-devel
+  #   url: git@github.com:mikaelarguedas/turtlebot3.git
+  #   version: fixup_launch_rviz
   # turtlebot3/turtlebot3_msgs:
   #   type: git
   #   url: https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
   #   version: ros2-devel
   # turtlebot3/turtlebot3_simulations:
   #   type: git
-  #   url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
-  #   version: ros2-devel
+  #   url: git@github.com:mikaelarguedas/turtlebot3_simulations.git
+  #   version: disable_scan_in_rviz
   # cartographer/cartographer:
   #   type: git
   #   url: https://github.com/ROBOTIS-GIT/cartographer.git
