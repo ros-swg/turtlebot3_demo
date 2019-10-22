@@ -1,11 +1,6 @@
 FROM osrf/ros:dashing-desktop
 # FROM osrf/ros2:nightly
 
-# patch rosdep for ament
-RUN rosdep update && \
-    apt-get purge python3-rosdep -y && \
-    pip3 install git+https://github.com/ruffsl/rosdep.git@ament
-
 # install helpful developer tools
 RUN apt-get update && apt-get install -y \
       bash-completion \
@@ -21,6 +16,7 @@ RUN apt-get update && apt-get install -y \
 
 # install turtlebot external packages
 RUN apt-get update && apt-get install -y \
+      ros-$ROS_DISTRO-rqt* \
       ros-$ROS_DISTRO-turtlebot3-cartographer \
       ros-$ROS_DISTRO-turtlebot3-navigation2 \
       ros-$ROS_DISTRO-turtlebot3-simulations \
@@ -39,6 +35,7 @@ COPY example_nodes/ src/example_nodes
 
 # install overlay package dependencies
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
+    && rosdep update \
     && rosdep install -y \
       --from-paths src \
       --ignore-src \
