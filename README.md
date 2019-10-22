@@ -57,7 +57,7 @@ You can first localize the robot by initializing the pose and then setting a nav
 
 ### Host/container insider attacker
 ``` bash
-rocker rosswg/turtlebot3_demo "byobu -f configs/reconnaissance_demo/unsecure.conf attach"
+rocker rosswg/turtlebot3_demo "byobu -f configs/unsecure.conf attach"
 ```
 
 ### Internal network attacker
@@ -73,7 +73,7 @@ docker network create -d overlay \
   overlay
 
 # in another Terminal (terminal 2), launch demo
-rocker --network overlay rosswg/turtlebot3_demo "byobu -f configs/reconnaissance_demo/unsecure.conf attach"
+rocker --network overlay rosswg/turtlebot3_demo "byobu -f configs/unsecure.conf attach"
 
 # in another Terminal (terminal 3), launch another container
 docker run -it --rm --network overlay --name aztarna rosswg/turtlebot3_demo /bin/bash
