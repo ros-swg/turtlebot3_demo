@@ -26,7 +26,7 @@ Start by attaching to a byobu session in a new container using rocker. [Byobu](h
 rocker --x11 --nvidia rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
 ```
 
-![](media/startup.png)
+![](media/mapping_start.png)
 
 Byobu starts a new session and launch the turtlebot3 demo over several windows:
 
@@ -49,7 +49,11 @@ Byobu starts a new session and launch the turtlebot3 demo over several windows:
 * `diagnostic`
   * glance overview of containerized processes
 
-You can first localize the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz. Feel free to poke around, open a new window and list or echo topics and services. For example, you can stop the navigation2 launch file running map server and and start cartographer from the mapping window to create and then save your own map, then stop cartographer and restart navigation2.
+You can first drive the robot around and generate a map using the teleoperation script in the selected shell. You can go to the mapping window to save your map.
+
+[![](media/mapping3.png)](media/mapping.mp4)
+
+Feel free to poke around, open a new window and list or echo topics and services. You can explore the other panes as well, for example you can stop cartographer in the `mapping` window and start the navigation launchfile from the `navigation` window. You will stat by localizing the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz.
 
 [![](media/localize.png)](media/localize.mp4)
 
