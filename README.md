@@ -53,7 +53,13 @@ You can first localize the robot by initializing the pose and then setting a nav
 
 [![](media/localize.png)](media/localize.mp4)
 
-## Running the reconnaissance demos:
+## Running the reconnaissance demo:
+
+Reconnaissance is the act of gathering preliminary data or intelligence on your target. The data is gathered in order to better plan for your attack. Reconnaissance can be performed actively (meaning that you are directly touching/connecting-to the target) or passively (meaning that your reconnaissance is being performed through an intermediary).
+
+The purpose of reconnaissance is to accumulate as much information as possible about a robot or robot component, including the available ROS abstractions (topics, services, etc.), the version of ROS, the target’s hardware platform and more.
+
+In this short tutorial we'll demonstrate the use of [`aztarna`](https://github.com/aliasrobotics/aztarna/), a tool for performing reconnaissance in a variety of robotic systems. Particularly, we'll look at the information we can obtain by performing active reconnaissance in an unsecure robot acting both as an attacker with direct access to the robot ("host/container" insider) and as an attacker with access to the local internal network where ROS 2 operates.
 
 ### Host/container insider attacker
 ``` bash
@@ -77,6 +83,8 @@ rocker --network overlay rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsec
 
 # in another Terminal (terminal 3), launch another container
 docker run -it --rm --network overlay --name aztarna rosswg/turtlebot3_demo:roscon19 /bin/bash
+# then perform a scan
+$ aztarna -t ros2
 ```
 
 Cleanup afterwards:
