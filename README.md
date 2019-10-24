@@ -76,7 +76,7 @@ docker network create -d overlay \
 rocker --network overlay rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
 
 # in another Terminal (terminal 3), launch another container
-docker run -it --rm --network overlay --name aztarna rosswg/turtlebot3_demo /bin/bash
+docker run -it --rm --network overlay --name aztarna rosswg/turtlebot3_demo:roscon19 /bin/bash
 ```
 
 Cleanup afterwards:
