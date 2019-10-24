@@ -57,7 +57,7 @@ You can first localize the robot by initializing the pose and then setting a nav
 
 ### Host/container insider attacker
 ``` bash
-rocker rosswg/turtlebot3_demo "byobu -f configs/unsecure.conf attach"
+rocker rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
 ```
 
 ### Internal network attacker
