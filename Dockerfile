@@ -52,8 +52,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install
 
-# install tools for footprinting and pentesting
-# RUN pip3 install aztarna
+# fetch and install tools for reconnaissance
 WORKDIR /tmp
 RUN apt-get -qq update && apt-get -y install \
       libgmp3-dev gengetopt \
