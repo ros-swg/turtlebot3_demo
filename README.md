@@ -61,7 +61,7 @@ Feel free to poke around, open a new window and list or echo topics and services
 
 ### Host/container insider attacker
 ``` bash
-rocker rosswg/turtlebot3_demo "byobu -f configs/unsecure.conf attach"
+rocker rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
 ```
 
 ### Internal network attacker
