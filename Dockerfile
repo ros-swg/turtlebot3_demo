@@ -58,7 +58,8 @@ WORKDIR $TB3_DEMO_DIR
 COPY policies policies
 RUN . $TB3_OVERLAY_WS/install/setup.sh && \
     ros2 security generate_artifacts -k keystore \
-      -p policies/tb3_gazebo_policy.xml
+      -p policies/tb3_gazebo_policy.xml \
+      -n /_ros2cli
 
 # copy demo files
 COPY maps maps
