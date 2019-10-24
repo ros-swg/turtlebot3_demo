@@ -52,14 +52,6 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install
 
-# generate artifacts for keystore
-ENV TB3_DEMO_DIR $TB3_OVERLAY_WS/..
-WORKDIR $TB3_DEMO_DIR
-COPY policies policies
-RUN . $TB3_OVERLAY_WS/install/setup.sh && \
-    ros2 security generate_artifacts -k keystore \
-      -p policies/tb3_gazebo_policy.xml
-
 # install tools for footprinting and pentesting
 # RUN pip3 install aztarna
 WORKDIR /tmp
@@ -76,8 +68,13 @@ RUN git clone https://github.com/aliasrobotics/aztarna && \
 # install tshark
 RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -y install tshark
 
-# set the working directory back to its previous status
+# generate artifacts for keystore
+ENV TB3_DEMO_DIR $TB3_OVERLAY_WS/..
 WORKDIR $TB3_DEMO_DIR
+COPY policies policies
+RUN . $TB3_OVERLAY_WS/install/setup.sh && \
+    ros2 security generate_artifacts -k keystore \
+      -p policies/tb3_gazebo_policy.xml
 
 # copy demo files
 COPY maps maps
