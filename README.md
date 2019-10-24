@@ -132,8 +132,9 @@ Next we can repopulated the keystore for all profiles via:
 
 ``` bash
 ros2 security generate_artifacts \
+  -k keystore \
   -p policy/my_policy.xml \
-  -k keystore
+  -n /_ros2cli
 ```
 
 Finally, go back and re-enable security and restart simulation and the teleop nodes.
