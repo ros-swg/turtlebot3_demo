@@ -60,8 +60,8 @@ RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
       libjson-c-dev unzip \
       libunistring-dev wget \
       libxml2-dev libxslt1-dev \
-      libffi-dev libssl-dev && \
-      tshark \
+      libffi-dev libssl-dev  \
+      tshark && \
       rm -rf /var/lib/apt/lists/*
 RUN git clone https://github.com/aliasrobotics/aztarna && \
       cd aztarna && python3 setup.py install
