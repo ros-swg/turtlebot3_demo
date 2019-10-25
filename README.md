@@ -67,7 +67,7 @@ In this short tutorial we'll demonstrate the use of [`aztarna`](https://github.c
 
 ### Host/container insider attacker
 ``` bash
-rocker rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
+rocker --x11 --nvidia rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
 ```
 
 ### Internal network attacker
@@ -83,7 +83,7 @@ docker network create -d overlay \
   overlay
 
 # in another Terminal (terminal 2), launch demo
-rocker --network overlay rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
+rocker  --x11 --nvidia --network overlay rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
 
 # in another Terminal (terminal 3), launch another container
 docker run -it --rm --network overlay --name aztarna rosswg/turtlebot3_demo:roscon19 /bin/bash
