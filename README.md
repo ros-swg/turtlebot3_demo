@@ -15,6 +15,8 @@ To run this demo using docker, the following dependencies are required:
 * [rocker](https://github.com/osrf/rocker)
   * Please ensure display forwarding is working with rocker.
   * [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) is also useful for those with a GPU.
+* [off-your-rocker](https://github.com/sloretz/off-your-rocker)
+  * Rocker extension. Required to run the sandbox demo. Used to pass arbitrary arguments Docker arguments through rocker.
 
   For those who can't use linux containers or for detailed instructions on how to build, you may still follow the general build steps of the [Dockerfile](Dockerfile).
 
@@ -172,7 +174,7 @@ rocker --x11 --nvidia  rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/sec
 This demo shows how robot code, acting improperly, can negatively affect the entire robotic system.
 
 ``` bash
-rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/bad_actor.conf attach"
+rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/bad_actor.conf attach" --oyr-run-arg " -v /var/run/docker.sock:/var/run/docker.sock "
 ```
 
 After launching with the above config, there are two commands ready in the `bad_actor` byobu window.
