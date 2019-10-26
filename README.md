@@ -59,6 +59,46 @@ Feel free to poke around, open a new window and list or echo topics and services
 
 [![](media/localize.png)](media/localize.mp4)
 
+## Running the reconnaissance demo:
+
+Reconnaissance is the act of gathering preliminary data or intelligence on your target. The data is gathered in order to better plan for your attack. Reconnaissance can be performed actively (meaning that you are directly touching/connecting-to the target) or passively (meaning that your reconnaissance is being performed through an intermediary).
+
+The purpose of reconnaissance is to accumulate as much information as possible about a robot or robot component, including the available ROS abstractions (topics, services, etc.), the version of ROS, the target’s hardware platform and more.
+
+In this short tutorial we'll demonstrate the use of [`aztarna`](https://github.com/aliasrobotics/aztarna/), a tool for performing reconnaissance in a variety of robotic systems. Particularly, we'll look at the information we can obtain by performing active reconnaissance in an unsecure robot acting both as an attacker with direct access to the robot ("host/container" insider) and as an attacker with access to the local internal network where ROS 2 operates.
+
+### Host/container insider attacker
+``` bash
+rocker --x11 --nvidia rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
+```
+
+### Internal network attacker
+``` bash
+# in Terminal (terminal 1), initialize first a swarm
+docker swarm init
+# in Terminal (terminal 1), create the network overlay
+docker network create -d overlay \
+  --subnet=10.0.0.0/24 \
+  --gateway=10.0.0.1 \
+	--ip-range 10.0.0.192/27 \
+  --attachable \
+  overlay
+
+# in another Terminal (terminal 2), launch demo
+rocker  --x11 --nvidia --network overlay rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
+
+# in another Terminal (terminal 3), launch another container
+docker run -it --rm --network overlay --name aztarna rosswg/turtlebot3_demo:roscon19 /bin/bash
+# then perform a scan
+$ aztarna -t ros2
+```
+
+Cleanup afterwards:
+```bash
+docker network rm overlay
+```
+
+
 ## Running the secure demo:
 
 So far we've simply launched the turtlebot3 without using SROS2. To enable security, simply exit the previous byobu session and start a new one now using the secure config:

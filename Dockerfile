@@ -52,6 +52,20 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install
 
+# fetch and install tools for reconnaissance
+WORKDIR /tmp
+RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+      libgmp3-dev gengetopt \
+      libpcap-dev flex byacc \
+      libjson-c-dev unzip \
+      libunistring-dev wget \
+      libxml2-dev libxslt1-dev \
+      libffi-dev libssl-dev  \
+      tshark && \
+      rm -rf /var/lib/apt/lists/*
+RUN git clone https://github.com/aliasrobotics/aztarna && \
+      cd aztarna && python3 setup.py install
+
 # generate artifacts for keystore
 ENV TB3_DEMO_DIR $TB3_OVERLAY_WS/..
 WORKDIR $TB3_DEMO_DIR
