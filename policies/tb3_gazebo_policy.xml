@@ -676,6 +676,8 @@
         <topic>global_costmap/published_footprint</topic>
         <topic>odom</topic>
         <topic>parameter_events</topic>
+        <topic>tf</topic>
+        <topic>tf_static</topic>
       </topics>
     </profile>
     <profile node="recovery_GetRobotPose_client" ns="/">
