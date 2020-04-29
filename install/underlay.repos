@@ -1,0 +1,27 @@
+repositories:
+  BehaviorTree/BehaviorTree.CPP:
+    type: git
+    url: https://github.com/BehaviorTree/BehaviorTree.CPP.git
+    version: ros2-3.1.1
+  ros/angles:
+    type: git
+    url: https://github.com/ros/angles.git
+    version: ros2
+  ros-perception/image_common:
+    type: git
+    url: https://github.com/ros-perception/image_common.git
+    version: ros2
+  ros-perception/vision_opencv:
+    type: git
+    # url: https://github.com/ros-perception/vision_opencv.git
+    # version: ros2
+    url: https://github.com/LewisLiuPub/vision_opencv.git
+    version: ros2_cv4
+  ros-planning/navigation2:
+    type: git
+    url: https://github.com/ros-planning/navigation2.git
+    version: master
+  ros-simulation/gazebo_ros_pkgs:
+    type: git
+    url: https://github.com/ros-simulation/gazebo_ros_pkgs.git
+    version: ros2
