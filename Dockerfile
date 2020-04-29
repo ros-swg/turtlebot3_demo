@@ -1,5 +1,5 @@
-FROM osrf/ros:dashing-desktop
-# FROM osrf/ros2:nightly
+ARG FROM_IMAGE=osrf/ros2:nightly
+FROM $FROM_IMAGE
 
 # install helpful developer tools
 RUN apt-get update && apt-get install -y \
@@ -7,11 +7,11 @@ RUN apt-get update && apt-get install -y \
       byobu \
       fish \
       glances \
+      micro \
       nano \
       python3-argcomplete \
       tree \
       vim \
-    && cd /usr/bin && curl https://getmic.ro | bash \
     && rm -rf /var/lib/apt/lists/*
 
 # install turtlebot external packages
