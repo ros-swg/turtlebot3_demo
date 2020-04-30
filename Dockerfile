@@ -9,22 +9,22 @@ FROM $FROM_IMAGE AS cache
 ARG UNDERLAY_WS
 WORKDIR $UNDERLAY_WS/src
 COPY ./install/underlay.repos ../
-RUN vcs import ./ < ../underlay.repos \
-    && find ./ -name ".git" | xargs rm -rf
+RUN vcs import ./ < ../underlay.repos && \
+    find ./ -name ".git" | xargs rm -rf
 
 # copy overlay source
 ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS/src
 COPY ./install/overlay.repos ../
-RUN vcs import ./ < ../overlay.repos \
-    && find ./ -name ".git" | xargs rm -rf
+RUN vcs import ./ < ../overlay.repos && \
+    find ./ -name ".git" | xargs rm -rf
 
 # copy manifests for caching
 WORKDIR /opt
-RUN mkdir -p /tmp/opt \
-    && find ./ -name "package.xml" | \
-      xargs cp --parents -t /tmp/opt \
-    && find ./ -name "COLCON_IGNORE" | \
+RUN mkdir -p /tmp/opt && \
+    find ./ -name "package.xml" | \
+      xargs cp --parents -t /tmp/opt && \
+    find ./ -name "COLCON_IGNORE" | \
       xargs cp --parents -t /tmp/opt || true
 
 # multi-stage for building
