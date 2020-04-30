@@ -83,8 +83,6 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
           -Wno-deprecated-declarations \
         "
 
-
-
 # copy overlay manifests
 ENV OVERLAY_WS /opt/overlay_ws
 COPY --from=cache /tmp/overlay_ws $OVERLAY_WS
@@ -118,15 +116,16 @@ RUN . $UNDERLAY_WS/install/setup.sh && \
       --packages-up-to \
         "turtlebot3_simulations" \
         "turtlebot3_navigation2" \
+        "turtlebot3_teleop" \
       --packages-skip \
         "turtlebot3_node" \
         "turtlebot3"
 
-# # generate artifacts for keystore
-# ENV TB3_DEMO_DIR $TB3_OVERLAY_WS/..
-# WORKDIR $TB3_DEMO_DIR
-# COPY policies policies
-# RUN . $TB3_OVERLAY_WS/install/setup.sh && \
+# generate artifacts for keystore
+ENV TB3_DEMO_DIR $OVERLAY_WS/..
+WORKDIR $TB3_DEMO_DIR
+COPY policies policies
+# RUN . $OVERLAY_WS/install/setup.sh && \
 #     ros2 security generate_artifacts -k keystore \
 #       -p policies/tb3_gazebo_policy.xml \
 #       -n /_ros2cli
@@ -138,10 +137,10 @@ COPY .gazebo /root/.gazebo
 
 # source overlay workspace from entrypoint
 RUN sed --in-place \
-      's|^source .*|source "$TB3_OVERLAY_WS/install/setup.bash"|' \
+      's|^source .*|source "$OVERLAY_WS/install/setup.bash"|' \
       /ros_entrypoint.sh && \
     cp /etc/skel/.bashrc ~/ && \
-    echo 'source "$TB3_OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
+    echo 'source "$OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
 
 ENV TURTLEBOT3_MODEL='burger' \
-    GAZEBO_MODEL_PATH=/opt/ros/$ROS_DISTRO/share/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
+    GAZEBO_MODEL_PATH=$OVERLAY_WS/install/turtlebot3_gazebo/share/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
