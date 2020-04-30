@@ -3,7 +3,7 @@ ARG UNDERLAY_WS=/opt/ros/underlay_ws
 ARG OVERLAY_WS=/opt/ros/overlay_ws
 
 # multi-stage for caching
-FROM $FROM_IMAGE AS cache
+FROM $FROM_IMAGE AS cacher
 
 # clone underlay source
 ARG UNDERLAY_WS
@@ -28,7 +28,7 @@ RUN mkdir -p /tmp/opt && \
       xargs cp --parents -t /tmp/opt || true
 
 # multi-stage for building
-FROM $FROM_IMAGE AS build
+FROM $FROM_IMAGE AS builder
 
 # install helpful developer tools
 RUN apt-get update && apt-get install -y \
@@ -57,7 +57,7 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
 # install underlay dependencies
 ARG UNDERLAY_WS
 WORKDIR $UNDERLAY_WS
-COPY --from=cache /tmp/$UNDERLAY_WS/src ./src
+COPY --from=cacher /tmp/$UNDERLAY_WS/src ./src
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths src \
@@ -69,7 +69,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     && rm -rf /var/lib/apt/lists/*
 
 # build underlay source
-COPY --from=cache $UNDERLAY_WS/src ./src
+COPY --from=cacher $UNDERLAY_WS/src ./src
 ARG UNDERLAY_MIXINS="ccache release"
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
@@ -84,7 +84,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
 # install overlay dependencies
 ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
-COPY --from=cache /tmp/$OVERLAY_WS/src ./src
+COPY --from=cacher /tmp/$OVERLAY_WS/src ./src
 RUN . $UNDERLAY_WS/install/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths \
@@ -101,7 +101,7 @@ RUN . $UNDERLAY_WS/install/setup.sh && \
     && rm -rf /var/lib/apt/lists/*
 
 # build overlay source
-COPY --from=cache $OVERLAY_WS/src ./src
+COPY --from=cacher $OVERLAY_WS/src ./src
 ARG OVERLAY_MIXINS="release ccache"
 RUN . $UNDERLAY_WS/install/setup.sh && \
     colcon build \
