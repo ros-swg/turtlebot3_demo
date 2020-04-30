@@ -54,12 +54,10 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
       libgazebo11-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# copy underlay manifests
+# install underlay dependencies
 ARG UNDERLAY_WS
 WORKDIR $UNDERLAY_WS
 COPY --from=cache /tmp/$UNDERLAY_WS/src ./src
-
-# install underlay dependencies
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths src \
@@ -70,10 +68,8 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
       " \
     && rm -rf /var/lib/apt/lists/*
 
-# copy underlay source
-COPY --from=cache $UNDERLAY_WS/src ./src
-
 # build underlay source
+COPY --from=cache $UNDERLAY_WS/src ./src
 ARG UNDERLAY_MIXINS="ccache release"
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
@@ -85,12 +81,10 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
           -Wno-deprecated-declarations \
         "
 
-# copy overlay manifests
+# install overlay dependencies
 ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
 COPY --from=cache /tmp/$OVERLAY_WS/src ./src
-
-# install overlay dependencies
 RUN . $UNDERLAY_WS/install/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths \
@@ -106,10 +100,8 @@ RUN . $UNDERLAY_WS/install/setup.sh && \
       " \
     && rm -rf /var/lib/apt/lists/*
 
-# copy overlay source
-COPY --from=cache $OVERLAY_WS/src ./src
-
 # build overlay source
+COPY --from=cache $OVERLAY_WS/src ./src
 ARG OVERLAY_MIXINS="release ccache"
 RUN . $UNDERLAY_WS/install/setup.sh && \
     colcon build \
