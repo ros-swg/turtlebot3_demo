@@ -1,29 +1,31 @@
 ARG FROM_IMAGE=osrf/ros2:nightly
+ARG UNDERLAY_WS=/opt/ros/underlay_ws
+ARG OVERLAY_WS=/opt/ros/overlay_ws
 
 # multi-stage for caching
 FROM $FROM_IMAGE AS cache
 
 # clone underlay source
-ENV UNDERLAY_WS /opt/underlay_ws
-RUN mkdir -p $UNDERLAY_WS/src
-WORKDIR $UNDERLAY_WS
-COPY ./install/underlay.repos ./
-RUN vcs import src < underlay.repos
-# # RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
+ARG UNDERLAY_WS
+WORKDIR $UNDERLAY_WS/src
+COPY ./install/underlay.repos ../
+RUN vcs import ./ < ../underlay.repos \
+    && find ./ -name ".git" | xargs rm -rf
 
 # copy overlay source
-ENV OVERLAY_WS /opt/overlay_ws
-RUN mkdir -p $OVERLAY_WS/src
-WORKDIR $OVERLAY_WS
-COPY ./install/overlay.repos ./
-RUN vcs import src < overlay.repos
+ARG OVERLAY_WS
+WORKDIR $OVERLAY_WS/src
+COPY ./install/overlay.repos ../
+RUN vcs import ./ < ../overlay.repos \
+    && find ./ -name ".git" | xargs rm -rf
 
 # copy manifests for caching
 WORKDIR /opt
-RUN find ./ -name "package.xml" | \
-      xargs cp --parents -t /tmp \
+RUN mkdir -p /tmp/opt \
+    && find ./ -name "package.xml" | \
+      xargs cp --parents -t /tmp/opt \
     && find ./ -name "COLCON_IGNORE" | \
-      xargs cp --parents -t /tmp
+      xargs cp --parents -t /tmp/opt || true
 
 # multi-stage for building
 FROM $FROM_IMAGE AS build
@@ -53,9 +55,9 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # copy underlay manifests
-ENV UNDERLAY_WS /opt/underlay_ws
-COPY --from=cache /tmp/underlay_ws $UNDERLAY_WS
+ARG UNDERLAY_WS
 WORKDIR $UNDERLAY_WS
+COPY --from=cache /tmp/$UNDERLAY_WS/src ./src
 
 # install underlay dependencies
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
@@ -69,7 +71,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     && rm -rf /var/lib/apt/lists/*
 
 # copy underlay source
-COPY --from=cache $UNDERLAY_WS ./
+COPY --from=cache $UNDERLAY_WS/src ./src
 
 # build underlay source
 ARG UNDERLAY_MIXINS="ccache release"
@@ -84,9 +86,9 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
         "
 
 # copy overlay manifests
-ENV OVERLAY_WS /opt/overlay_ws
-COPY --from=cache /tmp/overlay_ws $OVERLAY_WS
+ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
+COPY --from=cache /tmp/$OVERLAY_WS/src ./src
 
 # install overlay dependencies
 RUN . $UNDERLAY_WS/install/setup.sh && \
@@ -105,7 +107,7 @@ RUN . $UNDERLAY_WS/install/setup.sh && \
     && rm -rf /var/lib/apt/lists/*
 
 # copy overlay source
-COPY --from=cache $OVERLAY_WS ./
+COPY --from=cache $OVERLAY_WS/src ./src
 
 # build overlay source
 ARG OVERLAY_MIXINS="release ccache"
@@ -136,6 +138,7 @@ COPY configs configs
 COPY .gazebo /root/.gazebo
 
 # source overlay workspace from entrypoint
+ENV OVERLAY_WS $OVERLAY_WS
 RUN sed --in-place \
       's|^source .*|source "$OVERLAY_WS/install/setup.bash"|' \
       /ros_entrypoint.sh && \

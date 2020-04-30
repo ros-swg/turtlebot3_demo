@@ -13,10 +13,8 @@ repositories:
     version: ros2
   ros-perception/vision_opencv:
     type: git
-    # url: https://github.com/ros-perception/vision_opencv.git
-    # version: ros2
-    url: https://github.com/LewisLiuPub/vision_opencv.git
-    version: ros2_cv4
+    url: https://github.com/ros-perception/vision_opencv.git
+    version: ros2
   ros-planning/navigation2:
     type: git
     url: https://github.com/ros-planning/navigation2.git
