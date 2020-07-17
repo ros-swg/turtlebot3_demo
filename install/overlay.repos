@@ -15,3 +15,7 @@ repositories:
     # version: ros2
     url: https://github.com/ruffsl/turtlebot3_simulations.git
     version: navigation2_simulation
+  SteveMacenski/slam_toolbox:
+    type: git
+    url: https://github.com/SteveMacenski/slam_toolbox.git
+    version: foxy-devel

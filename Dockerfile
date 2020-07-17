@@ -60,11 +60,12 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
       --symlink-install \
       --mixin $OVERLAY_MIXINS \
       --packages-up-to \
-        "turtlebot3_simulations" \
-        "turtlebot3_teleop" \
+        slam_toolbox \
+        turtlebot3_simulations \
+        turtlebot3_teleop \
       --packages-skip \
-        "turtlebot3_node" \
-        "turtlebot3"
+        turtlebot3_node \
+        turtlebot3
 
 # generate artifacts for keystore
 ENV TB3_DEMO_DIR $OVERLAY_WS/..
