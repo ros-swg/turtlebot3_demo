@@ -77,7 +77,6 @@ COPY policies policies
 #       -n /_ros2cli
 
 # copy demo files
-COPY maps maps
 COPY configs configs
 COPY .gazebo /root/.gazebo
 
