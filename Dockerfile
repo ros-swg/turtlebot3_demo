@@ -61,7 +61,6 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
       --mixin $OVERLAY_MIXINS \
       --packages-up-to \
         "turtlebot3_simulations" \
-        "turtlebot3_navigation2" \
         "turtlebot3_teleop" \
       --packages-skip \
         "turtlebot3_node" \

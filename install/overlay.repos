@@ -15,4 +15,3 @@ repositories:
     # version: ros2
     url: https://github.com/ruffsl/turtlebot3_simulations.git
     version: navigation2_simulation
-#2
