@@ -1,16 +1,8 @@
 ARG FROM_IMAGE=ros:foxy
-ARG UNDERLAY_WS=/opt/ros/underlay_ws
 ARG OVERLAY_WS=/opt/ros/overlay_ws
 
 # multi-stage for caching
 FROM $FROM_IMAGE AS cacher
-
-# clone underlay source
-ARG UNDERLAY_WS
-WORKDIR $UNDERLAY_WS/src
-COPY ./install/underlay.repos ../
-RUN vcs import ./ < ../underlay.repos && \
-    find ./ -name ".git" | xargs rm -rf
 
 # copy overlay source
 ARG OVERLAY_WS
@@ -44,38 +36,14 @@ RUN apt-get update && apt-get install -y \
       vim \
     && rm -rf /var/lib/apt/lists/*
 
-# install underlay dependencies
-ARG UNDERLAY_WS
-WORKDIR $UNDERLAY_WS
-COPY --from=cacher /tmp/$UNDERLAY_WS/src ./src
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get update && rosdep install -q -y \
-      --from-paths src \
-      --ignore-src \
-    && rm -rf /var/lib/apt/lists/*
-
-# build underlay source
-COPY --from=cacher $UNDERLAY_WS/src ./src
-ARG UNDERLAY_MIXINS="ccache release"
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    colcon build \
-      --symlink-install \
-      --mixin $UNDERLAY_MIXINS \
-      --cmake-args \
-        --no-warn-unused-cli \
-        -DCMAKE_CXX_FLAGS=" \
-          -Wno-deprecated-declarations \
-        "
-
 # install overlay dependencies
 ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
 COPY --from=cacher /tmp/$OVERLAY_WS/src ./src
-RUN . $UNDERLAY_WS/install/setup.sh && \
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     apt-get update && rosdep install -q -y \
       --from-paths \
         src \
-        $UNDERLAY_WS/src \
       --ignore-src \
       --skip-keys " \
         cartographer_ros \
@@ -87,7 +55,7 @@ RUN . $UNDERLAY_WS/install/setup.sh && \
 # build overlay source
 COPY --from=cacher $OVERLAY_WS/src ./src
 ARG OVERLAY_MIXINS="release ccache"
-RUN . $UNDERLAY_WS/install/setup.sh && \
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install \
       --mixin $OVERLAY_MIXINS \
