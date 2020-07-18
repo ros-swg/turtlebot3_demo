@@ -71,10 +71,9 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
 ENV TB3_DEMO_DIR $OVERLAY_WS/..
 WORKDIR $TB3_DEMO_DIR
 COPY policies policies
-# RUN . $OVERLAY_WS/install/setup.sh && \
-#     ros2 security generate_artifacts -k keystore \
-#       -p policies/tb3_gazebo_policy.xml \
-#       -n /_ros2cli
+RUN . $OVERLAY_WS/install/setup.sh && \
+    ros2 security generate_artifacts -k keystore \
+      -p policies/tb3_gazebo_policy.xml
 
 # copy demo files
 COPY configs configs
