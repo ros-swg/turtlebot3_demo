@@ -1,6 +1,6 @@
 # Secure Turtlebot3 Demo
 
-This repository includes a demo for securing a simulated Turtlebot3 using SROS2; including sensor and control topics as well the relevant portions of the cartographer and navigation2 software stacks.
+This repository includes a demo for securing a simulated Turtlebot3 using SROS2; including sensor and control topics as well the relevant portions of the slam_toolbox and navigation2 software stacks.
 
 ## Setting the Demo
 
@@ -41,7 +41,7 @@ Byobu starts a new session and launch the turtlebot3 demo over several windows:
   * initialize pose script
   * navigation goal script
 * `mapping`
-  * cartographer mapping stack
+  * slam_toolbox mapping stack
   * save map file
   * map topic info
 * `sros`
@@ -55,7 +55,7 @@ You can first drive the robot around and generate a map using the teleoperation 
 
 [![](media/mapping3.png)](media/mapping.mp4)
 
-Feel free to poke around, open a new window and list or echo topics and services. You can explore the other panes as well, for example you can stop cartographer in the `mapping` window and start the navigation launchfile from the `navigation` window. You will stat by localizing the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz.
+Feel free to poke around, open a new window and list or echo topics and services. You can explore the other panes as well, for example you can stop slam_toolbox in the `mapping` window and start the navigation launchfile from the `navigation` window. You will stat by localizing the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz.
 
 [![](media/localize.png)](media/localize.mp4)
 
