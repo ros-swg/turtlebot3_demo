@@ -3,16 +3,11 @@
     <enclave path="/">
       <profiles>
         <profile node="amcl" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
             <service>reinitialize_global_localization</service>
             <service>request_nomotion_update</service>
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <topics subscribe="ALLOW">
             <topic>initialpose</topic>
@@ -22,7 +17,6 @@
             <topic>amcl_pose</topic>
             <topic>particle_cloud</topic>
             <topic>particlecloud</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="amcl_rclcpp_node" ns="/">
@@ -38,17 +32,12 @@
           </topics>
         </profile>
         <profile node="bt_navigator" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
             <service>/navigate_to_pose/_action/cancel_goal</service>
             <service>/navigate_to_pose/_action/get_result</service>
             <service>/navigate_to_pose/_action/send_goal</service>
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <topics subscribe="ALLOW">
             <topic>goal_pose</topic>
@@ -58,7 +47,6 @@
           <topics publish="ALLOW">
             <topic>/navigate_to_pose/_action/feedback</topic>
             <topic>/navigate_to_pose/_action/status</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="bt_navigator_rclcpp_node" ns="/">
@@ -102,14 +90,9 @@
           </topics>
         </profile>
         <profile node="controller_server" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <services request="ALLOW">
           </services>
@@ -124,7 +107,6 @@
             <topic>marker</topic>
             <topic>received_global_plan</topic>
             <topic>transformed_global_plan</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="controller_server_rclcpp_node" ns="/">
@@ -167,18 +149,13 @@
           </topics>
         </profile>
         <profile node="global_costmap" ns="/global_costmap">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
             <service>clear_around_global_costmap</service>
             <service>clear_entirely_global_costmap</service>
             <service>clear_except_global_costmap</service>
             <service>get_costmap</service>
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <topics subscribe="ALLOW">
             <topic>/map</topic>
@@ -193,7 +170,6 @@
             <topic>costmap_updates</topic>
             <topic>published_footprint</topic>
             <topic>voxel_grid</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="global_costmap_rclcpp_node" ns="/global_costmap">
@@ -325,18 +301,13 @@
           </topics>
         </profile>
         <profile node="local_costmap" ns="/local_costmap">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
             <service>clear_around_local_costmap</service>
             <service>clear_entirely_local_costmap</service>
             <service>clear_except_local_costmap</service>
             <service>get_costmap</service>
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <topics subscribe="ALLOW">
             <topic>footprint</topic>
@@ -350,11 +321,10 @@
             <topic>costmap_updates</topic>
             <topic>published_footprint</topic>
             <topic>voxel_grid</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="local_costmap_rclcpp_node" ns="/local_costmap">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
           </services>
@@ -371,21 +341,15 @@
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
             <service>~/save_map</service>
           </services>
           <topics subscribe="ALLOW">
           </topics>
           <topics publish="ALLOW">
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="map_saver_rclcpp_node" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
           </services>
@@ -398,11 +362,6 @@
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
             <service>~/load_map</service>
             <service>~/map</service>
           </services>
@@ -410,24 +369,17 @@
           </topics>
           <topics publish="ALLOW">
             <topic>map</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="planner_server" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <topics subscribe="ALLOW">
           </topics>
           <topics publish="ALLOW">
             <topic>plan</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="planner_server_rclcpp_node" ns="/">
@@ -446,7 +398,7 @@
           </topics>
         </profile>
         <profile node="recoveries_server" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
             <service>/backup/_action/cancel_goal</service>
@@ -458,11 +410,6 @@
             <service>/wait/_action/cancel_goal</service>
             <service>/wait/_action/get_result</service>
             <service>/wait/_action/send_goal</service>
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <topics subscribe="ALLOW">
             <topic>/local_costmap/costmap_raw</topic>
@@ -476,7 +423,6 @@
             <topic>/wait/_action/feedback</topic>
             <topic>/wait/_action/status</topic>
             <topic>cmd_vel</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="recoveries_server_rclcpp_node" ns="/">
@@ -633,17 +579,12 @@
           </topics>
         </profile>
         <profile node="waypoint_follower" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
             <service>/FollowWaypoints/_action/cancel_goal</service>
             <service>/FollowWaypoints/_action/get_result</service>
             <service>/FollowWaypoints/_action/send_goal</service>
-            <service>~/change_state</service>
-            <service>~/get_available_states</service>
-            <service>~/get_available_transitions</service>
-            <service>~/get_state</service>
-            <service>~/get_transition_graph</service>
           </services>
           <services request="ALLOW">
             <service>/navigate_to_pose/_action/cancel_goal</service>
@@ -657,7 +598,6 @@
           <topics publish="ALLOW">
             <topic>/FollowWaypoints/_action/feedback</topic>
             <topic>/FollowWaypoints/_action/status</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
       </profiles>
