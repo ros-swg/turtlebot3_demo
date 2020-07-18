@@ -22,8 +22,6 @@
         <profile node="amcl_rclcpp_node" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <topics subscribe="ALLOW">
             <topic>scan</topic>
           </topics>
@@ -52,8 +50,6 @@
         <profile node="bt_navigator_rclcpp_node" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <services request="ALLOW">
             <service>/compute_path_to_pose/_action/cancel_goal</service>
             <service>/compute_path_to_pose/_action/get_result</service>
@@ -92,10 +88,6 @@
         <profile node="controller_server" ns="/">
           <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <services request="ALLOW">
-          </services>
           <topics subscribe="ALLOW">
             <topic>odom</topic>
           </topics>
@@ -117,8 +109,6 @@
             <service>/follow_path/_action/get_result</service>
             <service>/follow_path/_action/send_goal</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>/follow_path/_action/feedback</topic>
             <topic>/follow_path/_action/status</topic>
@@ -133,20 +123,10 @@
             <service>reset_world</service>
             <service>unpause_physics</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="global_costmap_client" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="global_costmap" ns="/global_costmap">
           <xi:include href="common/lifecycle_node.xml"
@@ -175,8 +155,6 @@
         <profile node="global_costmap_rclcpp_node" ns="/global_costmap">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <topics subscribe="ALLOW">
             <topic>/intel_realsense_r200_depth/points</topic>
             <topic>/scan</topic>
@@ -192,8 +170,6 @@
           <services reply="ALLOW">
             <service>set_camera_info</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>/intel_realsense_r200_depth/camera_info</topic>
             <topic>/intel_realsense_r200_depth/depth/camera_info</topic>
@@ -209,26 +185,16 @@
             <service>~/is_active</service>
             <service>~/manage_nodes</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="lifecycle_manager_localization_service_client" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <services request="ALLOW">
             <service>/amcl/change_state</service>
             <service>/amcl/get_state</service>
             <service>/map_server/change_state</service>
             <service>/map_server/get_state</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="lifecycle_manager_navigation" ns="/">
           <xi:include href="common/node.xml"
@@ -237,16 +203,10 @@
             <service>~/is_active</service>
             <service>~/manage_nodes</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="lifecycle_manager_navigation_service_client" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <services request="ALLOW">
             <service>/bt_navigator/change_state</service>
             <service>/bt_navigator/get_state</service>
@@ -259,10 +219,6 @@
             <service>/waypoint_follower/change_state</service>
             <service>/waypoint_follower/get_state</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="lifecycle_manager_slam" ns="/">
           <xi:include href="common/node.xml"
@@ -271,34 +227,18 @@
             <service>~/is_active</service>
             <service>~/manage_nodes</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="lifecycle_manager_slam_service_client" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <services request="ALLOW">
             <service>/map_saver/change_state</service>
             <service>/map_saver/get_state</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="local_costmap_client" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="local_costmap" ns="/local_costmap">
           <xi:include href="common/lifecycle_node.xml"
@@ -326,8 +266,6 @@
         <profile node="local_costmap_rclcpp_node" ns="/local_costmap">
           <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <topics subscribe="ALLOW">
             <topic>/intel_realsense_r200_depth/points</topic>
             <topic>/scan</topic>
@@ -343,20 +281,10 @@
           <services reply="ALLOW">
             <service>~/save_map</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="map_saver_rclcpp_node" ns="/">
           <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="map_server" ns="/">
           <xi:include href="common/node.xml"
@@ -365,8 +293,6 @@
             <service>~/load_map</service>
             <service>~/map</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>map</topic>
           </topics>
@@ -374,10 +300,6 @@
         <profile node="planner_server" ns="/">
           <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>plan</topic>
           </topics>
@@ -390,8 +312,6 @@
             <service>/compute_path_to_pose/_action/get_result</service>
             <service>/compute_path_to_pose/_action/send_goal</service>
           </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>/compute_path_to_pose/_action/feedback</topic>
             <topic>/compute_path_to_pose/_action/status</topic>
@@ -428,18 +348,10 @@
         <profile node="recoveries_server_rclcpp_node" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="robot_state_publisher" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <topics subscribe="ALLOW">
             <topic>joint_states</topic>
           </topics>
@@ -452,8 +364,6 @@
         <profile node="rviz2" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <services request="ALLOW">
             <service>/FollowWaypoints/_action/cancel_goal</service>
             <service>/FollowWaypoints/_action/get_result</service>
@@ -518,8 +428,6 @@
         <profile node="teleop_keyboard" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <topics publish="ALLOW">
             <topic>cmd_vel</topic>
           </topics>
@@ -529,14 +437,10 @@
             <topic>tf</topic>
             <topic>tf_static</topic>
           </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="turtlebot3_diff_drive" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
           <topics subscribe="ALLOW">
             <topic>cmd_vel</topic>
           </topics>
@@ -548,10 +452,6 @@
         <profile node="turtlebot3_imu" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>imu</topic>
           </topics>
@@ -559,10 +459,6 @@
         <profile node="turtlebot3_joint_state" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>joint_states</topic>
           </topics>
@@ -570,10 +466,6 @@
         <profile node="turtlebot3_laserscan" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
-          <services reply="ALLOW">
-          </services>
-          <topics subscribe="ALLOW">
-          </topics>
           <topics publish="ALLOW">
             <topic>scan</topic>
           </topics>
