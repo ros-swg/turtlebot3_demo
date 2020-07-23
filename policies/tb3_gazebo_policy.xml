@@ -258,6 +258,9 @@
         <profile node="map_saver_rclcpp_node" ns="/">
           <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
+          <topics subscribe="ALLOW">
+            <topic>map</topic>
+          </topics>
         </profile>
         <profile node="map_server" ns="/">
           <xi:include href="common/lifecycle_node.xml"
