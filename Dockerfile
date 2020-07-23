@@ -41,7 +41,9 @@ ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
 COPY --from=cacher /tmp/$OVERLAY_WS/src ./src
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get -qq update && rosdep update --rosdistro $ROS_DISTRO && \
+    apt-get -qq update && apt-get install -y \
+      ros-$ROS_DISTRO-slam-toolbox && \    
+    rosdep update --rosdistro $ROS_DISTRO && \
     rosdep install -q -y \
       --from-paths \
         src \
@@ -61,7 +63,6 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
       --symlink-install \
       --mixin $OVERLAY_MIXINS \
       --packages-up-to \
-        slam_toolbox \
         turtlebot3_simulations \
         turtlebot3_teleop \
       --packages-skip \
