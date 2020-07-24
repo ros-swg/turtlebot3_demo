@@ -69,6 +69,28 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
         turtlebot3_node \
         turtlebot3
 
+# # install RTI Connext
+# ENV RTI_NC_LICENSE_ACCEPTED yes
+# RUN apt-get update && apt-get install -y \
+#       ros-$ROS_DISTRO-rmw-connext-cpp \
+#     && rm -rf /var/lib/apt/lists/*
+# # set up environment
+# ENV NDDSHOME /opt/rti.com/rti_connext_dds-5.3.1
+# ENV PATH "$NDDSHOME/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/lib/x64Linux3gcc5.4.0":$LD_LIBRARY_PATH
+# # install RTI Security
+# WORKDIR $NDDSHOME
+# # ADD https://s3.amazonaws.com/RTI/Bundles/5.3.1/Evaluation/rti_connext_dds_secure-5.3.1-eval-x64Linux3gcc5.4.0.tar.gz ./
+# # RUN tar -xvf rti_connext_dds_secure-5.3.1-eval-x64Linux3gcc5.4.0.tar.gz -C ./
+# COPY ./rti ./
+# RUN rtipkginstall rti_security_plugins-5.3.1-eval-x64Linux3gcc5.4.0.rtipkg && \
+#     rtipkginstall openssl-1.0.2n-5.3.1-host-x64Linux.rtipkg && \
+#     tar -xvf openssl-1.0.2n-target-x64Linux3gcc5.4.0.tar.gz
+# ENV PATH "$NDDSHOME/openssl-1.0.2n/x64Linux3gcc5.4.0/release/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/openssl-1.0.2n/x64Linux3gcc5.4.0/release/lib":$LD_LIBRARY_PATH
+# # install RTI QoS
+# ENV NDDS_QOS_PROFILES "$NDDSHOME/NDDS_QOS_PROFILES.xml"
+
 # generate artifacts for keystore
 ENV TB3_DEMO_DIR $OVERLAY_WS/..
 WORKDIR $TB3_DEMO_DIR
