@@ -6,8 +6,8 @@ header:
 pose:
   pose:
     position:
-      x: -2.7
-      y: 0.4
+      x: -2.0
+      y: -0.5
       z: 0.0
     orientation:
       x: 0.0

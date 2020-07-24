@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ros2 action send_goal /NavigateToPose nav2_msgs/action/NavigateToPose "
+ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose "
 pose:
   pose:
     position:
