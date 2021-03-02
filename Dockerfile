@@ -37,6 +37,21 @@ RUN apt-get update && apt-get install -y \
       vim \
     && rm -rf /var/lib/apt/lists/*
 
+# # install RTI Connext DDS
+# # set up environment
+# ENV NDDSHOME /opt/rti.com/rti_connext_dds-6.0.1
+# WORKDIR $NDDSHOME
+# COPY ./rti ./
+# RUN yes | ./rti_connext_dds-6.0.1-eval-x64Linux3gcc5.4.0.run && \
+#     mv y/*/* ./ && rm -rf y
+# # set RTI DDS environment
+# ENV CONNEXTDDS_DIR $NDDSHOME
+# ENV PATH "$NDDSHOME/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/lib/x64Linux3gcc5.4.0":$LD_LIBRARY_PATH
+# # set RTI openssl environment
+# ENV PATH "$NDDSHOME/third_party/openssl-1.1.1d/x64Linux4gcc7.3.0/release/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/third_party/openssl-1.1.1d/x64Linux4gcc7.3.0/release/lib":$LD_LIBRARY_PATH
+
 # install overlay dependencies
 ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS

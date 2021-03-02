@@ -1,4 +1,8 @@
 repositories:
+  # rticommunity/rmw_connextdds:
+  #   type: git
+  #   url: https://github.com/rticommunity/rmw_connextdds.git
+  #   version: master
   # ROBOTIS-GIT/turtlebot3:
   #   type: git
   #   # url: https://github.com/ROBOTIS-GIT/turtlebot3.git
