@@ -4,15 +4,15 @@
   <enclaves>
     <enclave path="/">
       <profiles>
-        <!-- <profile node="admin" ns="/">
+        <profile node="admin" ns="/">
           <services reply="ALLOW" request="ALLOW">
             <service>*</service>
           </services>
           <topics publish="ALLOW" subscribe="ALLOW">
             <topic>*</topic>
           </topics>
-        </profile> -->
-        <profile node="amcl" ns="/">
+        </profile>
+        <!-- <profile node="amcl" ns="/">
           <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <services reply="ALLOW">
@@ -440,7 +440,7 @@
           <actions execute="ALLOW">
             <action>/FollowWaypoints</action>
           </actions>
-        </profile>
+        </profile> -->
       </profiles>
     </enclave>
   </enclaves>
