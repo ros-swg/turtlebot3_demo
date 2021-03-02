@@ -6,10 +6,10 @@ FROM $FROM_IMAGE AS cacher
 
 # copy overlay source
 ARG OVERLAY_WS
-WORKDIR $OVERLAY_WS/src
-COPY ./install/overlay.repos ../
-RUN vcs import ./ < ../overlay.repos && \
-    find ./ -name ".git" | xargs rm -rf
+WORKDIR $OVERLAY_WS
+COPY ./overlay ./
+RUN vcs import src < overlay.repos && \
+    find src -name ".git" | xargs rm -rf || true
 
 # copy manifests for caching
 WORKDIR /opt
@@ -42,18 +42,11 @@ ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
 COPY --from=cacher /tmp/$OVERLAY_WS/src ./src
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get -qq update && apt-get install -y \
-      ros-$ROS_DISTRO-slam-toolbox && \    
-    rosdep update --rosdistro $ROS_DISTRO && \
+    apt-get update && rosdep update \
+      --rosdistro $ROS_DISTRO && \
     rosdep install -q -y \
-      --from-paths \
-        src \
+      --from-paths src \
       --ignore-src \
-      --skip-keys " \
-        cartographer_ros \
-        hls_lfcd_lds_driver \
-        dynamixel_sdk \
-      " \
     && rm -rf /var/lib/apt/lists/*
 
 # build overlay source
@@ -62,13 +55,7 @@ ARG OVERLAY_MIXINS="release ccache"
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install \
-      --mixin $OVERLAY_MIXINS \
-      --packages-up-to \
-        turtlebot3_simulations \
-        turtlebot3_teleop \
-      --packages-skip \
-        turtlebot3_node \
-        turtlebot3
+      --mixin $OVERLAY_MIXINS
 
 # # install RTI Connext
 # ENV RTI_NC_LICENSE_ACCEPTED yes
