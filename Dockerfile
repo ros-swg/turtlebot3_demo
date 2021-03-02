@@ -21,6 +21,7 @@ RUN mkdir -p /tmp/opt && \
 
 # multi-stage for building
 FROM $FROM_IMAGE AS builder
+ARG DEBIAN_FRONTEND=noninteractive
 
 # install helpful developer tools
 RUN apt-get update && apt-get install -y \
