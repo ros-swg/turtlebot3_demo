@@ -1,0 +1,43 @@
+<dds>
+  <qos_library name="UDPv4TransportLibrary">
+    <qos_profile name="DefaultProfile" is_default_qos="true">
+      <participant_factory_qos>
+        <logging>
+          <verbosity>ALL</verbosity>
+          <category>ALL</category>
+          <print_format>TIMESTAMPED</print_format>
+          <output_file>/tmp/log.xml</output_file>
+        </logging>
+      </participant_factory_qos>
+      <participant_qos>
+        <receiver_pool>
+          <buffer_size>65535</buffer_size>
+        </receiver_pool>
+        <property>
+          <value>
+            <element>
+              <name>dds.transport.UDPv4.builtin.parent.message_size_max</name>
+              <value>65535</value>
+            </element>
+            <element>
+              <name>dds.transport.UDPv4.builtin.send_socket_buffer_size </name>
+              <value>65535</value>
+            </element>
+            <element>
+              <name>dds.transport.UDPv4.builtin.recv_socket_buffer_size</name>
+              <value>65535</value>
+            </element>
+            <element>
+              <name>dds.transport.shmem.builtin.parent.message_size_max</name>
+              <value>65535</value>
+            </element>
+            <element>
+              <name>dds.transport.shmem.builtin.receive_buffer_size</name>
+              <value>65535</value>
+            </element> 
+          </value>
+        </property>
+      </participant_qos>
+    </qos_profile>
+  </qos_library>
+</dds>

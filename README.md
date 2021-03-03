@@ -1,6 +1,6 @@
 # Secure Turtlebot3 Demo
 
-This repository includes a demo for securing a simulated Turtlebot3 using SROS2; including sensor and control topics as well the relevant portions of the cartographer and navigation2 software stacks.
+This repository includes a demo for securing a simulated Turtlebot3 using SROS2; including sensor and control topics as well the relevant portions of the slam_toolbox and navigation2 software stacks.
 
 ## Setting the Demo
 
@@ -16,7 +16,7 @@ To run this demo using docker, the following dependencies are required:
   * Please ensure display forwarding is working with rocker.
   * [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) is also useful for those with a GPU.
 * [off-your-rocker](https://github.com/sloretz/off-your-rocker)
-  * Rocker extension. Required to run the sandbox demo. Used to pass arbitrary arguments Docker arguments through rocker.
+  * Rocker extension, for passing through arbitrary Docker arguments.
 
   For those who can't use linux containers or for detailed instructions on how to build, you may still follow the general build steps of the [Dockerfile](Dockerfile).
 
@@ -41,7 +41,7 @@ Byobu starts a new session and launch the turtlebot3 demo over several windows:
   * initialize pose script
   * navigation goal script
 * `mapping`
-  * cartographer mapping stack
+  * slam_toolbox mapping stack
   * save map file
   * map topic info
 * `sros`
@@ -55,49 +55,9 @@ You can first drive the robot around and generate a map using the teleoperation 
 
 [![](media/mapping3.png)](media/mapping.mp4)
 
-Feel free to poke around, open a new window and list or echo topics and services. You can explore the other panes as well, for example you can stop cartographer in the `mapping` window and start the navigation launchfile from the `navigation` window. You will stat by localizing the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz.
+Feel free to poke around, open a new window and list or echo topics and services. You can explore the other panes as well, for example you can stop slam_toolbox in the `mapping` window and start the navigation launchfile from the `navigation` window. You will stat by localizing the robot by initializing the pose and then setting a navigation goal via the scripts in the respective window panes. This can also be done graphically via rviz.
 
 [![](media/localize.png)](media/localize.mp4)
-
-## Running the reconnaissance demo:
-
-Reconnaissance is the act of gathering preliminary data or intelligence on your target. The data is gathered in order to better plan for your attack. Reconnaissance can be performed actively (meaning that you are directly touching/connecting-to the target) or passively (meaning that your reconnaissance is being performed through an intermediary).
-
-The purpose of reconnaissance is to accumulate as much information as possible about a robot or robot component, including the available ROS abstractions (topics, services, etc.), the version of ROS, the target’s hardware platform and more.
-
-In this short tutorial we'll demonstrate the use of [`aztarna`](https://github.com/aliasrobotics/aztarna/), a tool for performing reconnaissance in a variety of robotic systems. Particularly, we'll look at the information we can obtain by performing active reconnaissance in an unsecure robot acting both as an attacker with direct access to the robot ("host/container" insider) and as an attacker with access to the local internal network where ROS 2 operates.
-
-### Host/container insider attacker
-``` bash
-rocker --x11 --nvidia rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
-```
-
-### Internal network attacker
-``` bash
-# in Terminal (terminal 1), initialize first a swarm
-docker swarm init
-# in Terminal (terminal 1), create the network overlay
-docker network create -d overlay \
-  --subnet=10.0.0.0/24 \
-  --gateway=10.0.0.1 \
-	--ip-range 10.0.0.192/27 \
-  --attachable \
-  overlay
-
-# in another Terminal (terminal 2), launch demo
-rocker  --x11 --nvidia --network overlay rosswg/turtlebot3_demo:roscon19 "byobu -f configs/unsecure.conf attach"
-
-# in another Terminal (terminal 3), launch another container
-docker run -it --rm --network overlay --name aztarna rosswg/turtlebot3_demo:roscon19 /bin/bash
-# then perform a scan
-$ aztarna -t ros2
-```
-
-Cleanup afterwards:
-```bash
-docker network rm overlay
-```
-
 
 ## Running the secure demo:
 
@@ -119,7 +79,6 @@ export ROS_SECURITY_LOOKUP_TYPE=MATCH_PREFIX
 These variables simply enable as well as enforce security for all ros2 nodes while specifying the lookup path/strategy for loading key and access control artifacts. For more details on what secure options exist and what each is for, please view the design doc here:
 
 * https://design.ros2.org/articles/ros2_dds_security.html
-
 
 ## Re-generate security artifacts
 
@@ -188,51 +147,11 @@ export ROS_SECURITY_ENABLE=true
 
 Now try starting another teleop node with security disabled and check that only the secure teleop node can drive the robot.
 
-## Sandboxed Nodes Demo
-
-The [ROSCon 2019](https://ros-swg.github.io/ROSCon19_Security_Workshop/) [ROS2 Security Workshop](https://ros-swg.github.io/ROSCon19_Security_Workshop/)
-will present the opportunity to run the Turtlebot3 demo using the [launch-ros-sandbox](https://github.com/aws-robotics/launch-ros-sandbox)
-package. Specifically, the demo uses this package to launch the Turtlebot3 navigation nodes in a docker container. See the
-configs/sandbox_demo/navigation_sandbox.launch.py launch file for details.
-
-### Running the Security Workshop Sandbox Node Demo
-
-``` bash
-rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/unsecure.conf attach"
-```
-
-Omit the `--nvidia` arg if you don't have dedicated GPU for hardware acceleration of 3D OpenGL views.
-
-Likewise, the following command is used to run the demo using the secure config:
-
-``` bash
-rocker --x11 --nvidia  rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/secure.conf attach"
-```
-
-### Demonstrating Sandbox Resource Limits
-
-This demo shows how robot code, acting improperly, can negatively affect the entire robotic system.
-
-``` bash
-rocker --x11 --nvidia rosswg/turtlebot3_demo "byobu -f configs/sandbox_demo/bad_actor.conf attach" --oyr-run-arg " -v /var/run/docker.sock:/var/run/docker.sock "
-```
-
-After launching with the above config, there are two commands ready in the `bad_actor` byobu window.
-They are ready to run a cpu hog that will fork many busy processes.
-This is a contrived example - but it illustrates what could happen if a node that you are using hits an untested code path and goes into an infinite loop.
-
-If you run the top command (`ros2 run...`), you can see the CPU of your system jump to 100% usage (check the `diagnostic` byobu window), grinding everything else to a halt.
-
-However, if you kill that and run the bottom command (`ros2 launch ...`), it will launch inside a container that has a CPU resource limit set.
-This launch will be able to use at most 2 CPUs worth of processing, allowing the rest of the demo to still run at a normal speed.
-See `example_nodes/launch/sandboxed_cpu_hog.launch.py` for some more info on the arguments that make this happen.
-
-
 ## Developing
 To rebuild this demo locally if you are working on it, you can rebuild the Docker image with the same tag, so all above demo commands will work correctly.
 
 ``` bash
 git clone git@github.com:ros-swg/turtlebot3_demo.git
 cd turtlebot3_demo
-docker build . -t rosswg/turtlebot3_demo
+docker build --tag rosswg/turtlebot3_demo .
 ```

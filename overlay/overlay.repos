@@ -1,0 +1,21 @@
+repositories:
+  # rticommunity/rmw_connextdds:
+  #   type: git
+  #   url: https://github.com/rticommunity/rmw_connextdds.git
+  #   version: master
+  # ROBOTIS-GIT/turtlebot3:
+  #   type: git
+  #   # url: https://github.com/ROBOTIS-GIT/turtlebot3.git
+  #   # version: ros2
+  #   url: https://github.com/ruffsl/turtlebot3.git
+  #   version: navigation2_simulation
+  # ROBOTIS-GIT/turtlebot3_msgs:
+  #   type: git
+  #   url: https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+  #   version: ros2
+  # ROBOTIS-GIT/turtlebot3_simulations:
+  #   type: git
+  #   # url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+  #   # version: ros2
+  #   url: https://github.com/ruffsl/turtlebot3_simulations.git
+  #   version: navigation2_simulation

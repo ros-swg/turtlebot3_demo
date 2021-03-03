@@ -1,91 +1,119 @@
-FROM osrf/ros:dashing-desktop
-# FROM osrf/ros2:nightly
+ARG FROM_IMAGE=ros:foxy
+ARG OVERLAY_WS=/opt/ros/overlay_ws
+
+# multi-stage for caching
+FROM $FROM_IMAGE AS cacher
+
+# copy overlay source
+ARG OVERLAY_WS
+WORKDIR $OVERLAY_WS
+COPY ./overlay ./
+RUN vcs import src < overlay.repos && \
+    find src -name ".git" | xargs rm -rf || true
+
+# copy manifests for caching
+WORKDIR /opt
+RUN mkdir -p /tmp/opt && \
+    find ./ -name "package.xml" | \
+      xargs cp --parents -t /tmp/opt && \
+    find ./ -name "COLCON_IGNORE" | \
+      xargs cp --parents -t /tmp/opt || true
+
+# multi-stage for building
+FROM $FROM_IMAGE AS builder
+ARG DEBIAN_FRONTEND=noninteractive
 
 # install helpful developer tools
 RUN apt-get update && apt-get install -y \
       bash-completion \
       byobu \
+      ccache \
       fish \
       glances \
+      micro \
       nano \
       python3-argcomplete \
       tree \
       vim \
-    && cd /usr/bin && curl https://getmic.ro | bash \
     && rm -rf /var/lib/apt/lists/*
 
-# install turtlebot external packages
-RUN apt-get update && apt-get install -y \
-      ros-$ROS_DISTRO-rqt* \
-      ros-$ROS_DISTRO-turtlebot3-cartographer \
-      ros-$ROS_DISTRO-turtlebot3-navigation2 \
-      ros-$ROS_DISTRO-turtlebot3-simulations \
-      ros-$ROS_DISTRO-turtlebot3-teleop \
-    && rm -rf /var/lib/apt/lists/*
+# # install RTI Connext DDS
+# # set up environment
+# ENV NDDSHOME /opt/rti.com/rti_connext_dds-6.0.1
+# WORKDIR $NDDSHOME
+# COPY ./rti ./
+# RUN yes | ./rti_connext_dds-6.0.1-eval-x64Linux3gcc5.4.0.run && \
+#     mv y/*/* ./ && rm -rf y
+# # set RTI DDS environment
+# ENV CONNEXTDDS_DIR $NDDSHOME
+# ENV PATH "$NDDSHOME/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/lib/x64Linux3gcc5.4.0":$LD_LIBRARY_PATH
+# # set RTI openssl environment
+# ENV PATH "$NDDSHOME/third_party/openssl-1.1.1d/x64Linux4gcc7.3.0/release/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/third_party/openssl-1.1.1d/x64Linux4gcc7.3.0/release/lib":$LD_LIBRARY_PATH
 
-# clone overlay package repos
-ENV TB3_OVERLAY_WS /opt/tb3_overlay_ws
-RUN mkdir -p $TB3_OVERLAY_WS/src
-WORKDIR $TB3_OVERLAY_WS
-COPY .docker/overlay.repos ./
-RUN vcs import src < overlay.repos
-# Install extra sources from this repo
-COPY example_nodes/ src/example_nodes
-# RUN vcs import src < src/ros-planning/navigation2/tools/ros2_dependencies.repos
-
-# install overlay package dependencies
-RUN . /opt/ros/$ROS_DISTRO/setup.sh \
-    && rosdep update \
-    && rosdep install -y \
+# install overlay dependencies
+ARG OVERLAY_WS
+WORKDIR $OVERLAY_WS
+COPY --from=cacher /tmp/$OVERLAY_WS/src ./src
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
+    apt-get update && rosdep update \
+      --rosdistro $ROS_DISTRO && \
+    apt-get upgrade -y && \
+    rosdep install -q -y \
       --from-paths src \
       --ignore-src \
-      --skip-keys " \
-            ament_mypy \
-            libopensplice69 \
-            rti-connext-dds-5.3.1 \
-        " \
     && rm -rf /var/lib/apt/lists/*
 
-# build overlay package source
-# RUN touch $TB3_OVERLAY_WS/src/turtlebot3/turtlebot3_node/COLCON_IGNORE
+# build overlay source
+COPY --from=cacher $OVERLAY_WS/src ./src
+ARG OVERLAY_MIXINS="release ccache"
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
-      --symlink-install
+      --symlink-install \
+      --mixin $OVERLAY_MIXINS
 
-# fetch and install tools for reconnaissance
-WORKDIR /tmp
-RUN apt-get -qq update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
-      libgmp3-dev gengetopt \
-      libpcap-dev flex byacc \
-      libjson-c-dev unzip \
-      libunistring-dev wget \
-      libxml2-dev libxslt1-dev \
-      libffi-dev libssl-dev  \
-      tshark && \
-      rm -rf /var/lib/apt/lists/*
-RUN git clone https://github.com/aliasrobotics/aztarna && \
-      cd aztarna && python3 setup.py install
+# # install RTI Connext
+# ENV RTI_NC_LICENSE_ACCEPTED yes
+# RUN apt-get update && apt-get install -y \
+#       ros-$ROS_DISTRO-rmw-connext-cpp \
+#     && rm -rf /var/lib/apt/lists/*
+# # set up environment
+# ENV NDDSHOME /opt/rti.com/rti_connext_dds-5.3.1
+# ENV PATH "$NDDSHOME/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/lib/x64Linux3gcc5.4.0":$LD_LIBRARY_PATH
+# # install RTI Security
+# WORKDIR $NDDSHOME
+# # ADD https://s3.amazonaws.com/RTI/Bundles/5.3.1/Evaluation/rti_connext_dds_secure-5.3.1-eval-x64Linux3gcc5.4.0.tar.gz ./
+# # RUN tar -xvf rti_connext_dds_secure-5.3.1-eval-x64Linux3gcc5.4.0.tar.gz -C ./
+# COPY ./rti ./
+# RUN rtipkginstall rti_security_plugins-5.3.1-eval-x64Linux3gcc5.4.0.rtipkg && \
+#     rtipkginstall openssl-1.0.2n-5.3.1-host-x64Linux.rtipkg && \
+#     tar -xvf openssl-1.0.2n-target-x64Linux3gcc5.4.0.tar.gz
+# ENV PATH "$NDDSHOME/openssl-1.0.2n/x64Linux3gcc5.4.0/release/bin":$PATH
+# ENV LD_LIBRARY_PATH "$NDDSHOME/openssl-1.0.2n/x64Linux3gcc5.4.0/release/lib":$LD_LIBRARY_PATH
+# # install RTI QoS
+# ENV NDDS_QOS_PROFILES "$NDDSHOME/NDDS_QOS_PROFILES.xml"
 
 # generate artifacts for keystore
-ENV TB3_DEMO_DIR $TB3_OVERLAY_WS/..
+ENV TB3_DEMO_DIR $OVERLAY_WS/..
 WORKDIR $TB3_DEMO_DIR
 COPY policies policies
-RUN . $TB3_OVERLAY_WS/install/setup.sh && \
+RUN . $OVERLAY_WS/install/setup.sh && \
     ros2 security generate_artifacts -k keystore \
-      -p policies/tb3_gazebo_policy.xml \
-      -n /_ros2cli
+      -p policies/tb3_gazebo_policy.xml
 
 # copy demo files
-COPY maps maps
 COPY configs configs
 COPY .gazebo /root/.gazebo
 
 # source overlay workspace from entrypoint
+ENV OVERLAY_WS $OVERLAY_WS
 RUN sed --in-place \
-      's|^source .*|source "$TB3_OVERLAY_WS/install/setup.bash"|' \
+      's|^source .*|source "$OVERLAY_WS/install/setup.bash"|' \
       /ros_entrypoint.sh && \
     cp /etc/skel/.bashrc ~/ && \
-    echo 'source "$TB3_OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
+    echo 'source "$OVERLAY_WS/install/setup.bash"' >> ~/.bashrc
 
 ENV TURTLEBOT3_MODEL='burger' \
-    GAZEBO_MODEL_PATH=/opt/ros/$ROS_DISTRO/share/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
+    GAZEBO_MODEL_PATH=$OVERLAY_WS/install/turtlebot3_gazebo/share/turtlebot3_gazebo/models:$GAZEBO_MODEL_PATH
