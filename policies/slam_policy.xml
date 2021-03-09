@@ -117,6 +117,7 @@
             <topic>marker</topic>
             <topic>parameter_events</topic>
             <topic>received_global_plan</topic>
+            <topic>rosout</topic>
             <topic>transformed_global_plan</topic>
             <topic>~/transition_event</topic>
           </topics>
@@ -141,6 +142,7 @@
             <topic>/follow_path/_action/feedback</topic>
             <topic>/follow_path/_action/status</topic>
             <topic>parameter_events</topic>
+            <topic>rosout</topic>
           </topics>
         </profile>
         <profile node="gazebo" ns="/">
@@ -182,6 +184,7 @@
           </topics>
           <topics publish="ALLOW">
             <topic>parameter_events</topic>
+            <topic>rosout</topic>
           </topics>
         </profile>
         <profile node="global_costmap" ns="/global_costmap">
@@ -210,6 +213,7 @@
           </topics>
           <topics publish="ALLOW">
             <topic>/parameter_events</topic>
+            <topic>/rosout</topic>
             <topic>costmap</topic>
             <topic>costmap_raw</topic>
             <topic>costmap_updates</topic>
@@ -233,6 +237,7 @@
           </topics>
           <topics publish="ALLOW">
             <topic>/parameter_events</topic>
+            <topic>/rosout</topic>
           </topics>
         </profile>
         <profile node="lifecycle_manager_navigation" ns="/">
@@ -341,6 +346,7 @@
           </topics>
           <topics publish="ALLOW">
             <topic>parameter_events</topic>
+            <topic>rosout</topic>
           </topics>
         </profile>
         <profile node="local_costmap" ns="/local_costmap">
@@ -368,6 +374,7 @@
           </topics>
           <topics publish="ALLOW">
             <topic>/parameter_events</topic>
+            <topic>/rosout</topic>
             <topic>clearing_endpoints</topic>
             <topic>costmap</topic>
             <topic>costmap_raw</topic>
@@ -393,6 +400,7 @@
           </topics>
           <topics publish="ALLOW">
             <topic>/parameter_events</topic>
+            <topic>/rosout</topic>
           </topics>
         </profile>
         <profile node="map_saver" ns="/">
@@ -458,6 +466,7 @@
           <topics publish="ALLOW">
             <topic>parameter_events</topic>
             <topic>plan</topic>
+            <topic>rosout</topic>
             <topic>~/transition_event</topic>
           </topics>
         </profile>
@@ -481,6 +490,7 @@
             <topic>/compute_path_to_pose/_action/feedback</topic>
             <topic>/compute_path_to_pose/_action/status</topic>
             <topic>parameter_events</topic>
+            <topic>rosout</topic>
           </topics>
         </profile>
         <profile node="recoveries_server" ns="/">
@@ -521,6 +531,7 @@
             <topic>/wait/_action/status</topic>
             <topic>cmd_vel</topic>
             <topic>parameter_events</topic>
+            <topic>rosout</topic>
             <topic>~/transition_event</topic>
           </topics>
         </profile>
@@ -538,6 +549,7 @@
           </topics>
           <topics publish="ALLOW">
             <topic>parameter_events</topic>
+            <topic>rosout</topic>
           </topics>
         </profile>
         <profile node="robot_state_publisher" ns="/">
