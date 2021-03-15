@@ -309,6 +309,7 @@
             <topic>tf</topic>
             <topic>tf_static</topic>
           </topics>
+        </profile>
         <profile node="turtlebot3_diff_drive" ns="/">
           <xi:include href="common/node.xml"
             xpointer="xpointer(/profile/*)"/>
