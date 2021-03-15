@@ -17,7 +17,6 @@
             <topic>amcl_pose</topic>
             <topic>particle_cloud</topic>
             <topic>particlecloud</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="amcl_rclcpp_node" ns="/">
@@ -42,7 +41,6 @@
             <topic>tf_static</topic>
           </topics>
           <topics publish="ALLOW">
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="bt_navigator_rclcpp_node" ns="/">
@@ -77,7 +75,6 @@
             <topic>marker</topic>
             <topic>received_global_plan</topic>
             <topic>transformed_global_plan</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="controller_server_rclcpp_node" ns="/">
@@ -122,7 +119,6 @@
             <topic>costmap_raw</topic>
             <topic>costmap_updates</topic>
             <topic>published_footprint</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="global_costmap_rclcpp_node" ns="/global_costmap">
@@ -197,7 +193,6 @@
             <topic>costmap_updates</topic>
             <topic>published_footprint</topic>
             <topic>voxel_grid</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="local_costmap_rclcpp_node" ns="/local_costmap">
@@ -216,7 +211,6 @@
           </services>
           <topics publish="ALLOW">
             <topic>map</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="planner_server" ns="/">
@@ -224,7 +218,6 @@
             xpointer="xpointer(/profile/*)"/>
           <topics publish="ALLOW">
             <topic>plan</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="planner_server_rclcpp_node" ns="/">
@@ -248,7 +241,6 @@
           </topics>
           <topics publish="ALLOW">
             <topic>cmd_vel</topic>
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="recoveries_server_rclcpp_node" ns="/">
@@ -358,7 +350,6 @@
             <action>/FollowWaypoints</action>
           </actions>
           <topics publish="ALLOW">
-            <topic>~/transition_event</topic>
           </topics>
         </profile>
         <profile node="waypoint_follower_rclcpp_node" ns="/">
