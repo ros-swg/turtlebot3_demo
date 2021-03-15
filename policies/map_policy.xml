@@ -40,8 +40,6 @@
             <topic>tf</topic>
             <topic>tf_static</topic>
           </topics>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="bt_navigator_rclcpp_node" ns="/">
           <xi:include href="common/node.xml"
@@ -349,8 +347,6 @@
           <actions execute="ALLOW">
             <action>/FollowWaypoints</action>
           </actions>
-          <topics publish="ALLOW">
-          </topics>
         </profile>
         <profile node="waypoint_follower_rclcpp_node" ns="/">
           <xi:include href="common/node.xml"
