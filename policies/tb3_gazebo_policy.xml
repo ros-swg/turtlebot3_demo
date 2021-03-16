@@ -4,16 +4,16 @@
   <enclaves>
     <enclave path="/gazebo">
       <profiles>
-        <xi:include href="gazebo_profiles.xml"
+        <xi:include href="profiles/gazebo.xml"
           xpointer="xpointer(/profiles/*)"/>
-        <xi:include href="turtlebot3_profiles.xml"
+        <xi:include href="profiles/turtlebot3.xml"
           xpointer="xpointer(/profiles/*)"/>
       </profiles>
     </enclave>
     <enclave path="/teleop">
       <profiles>
         <profile node="teleop_keyboard" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="profiles/common/node.xml"
             xpointer="xpointer(/profile/*)"/>
           <topics publish="ALLOW">
             <topic>cmd_vel</topic>
@@ -23,21 +23,21 @@
     </enclave>
     <enclave path="/nav2_map">
       <profiles>
-        <xi:include href="nav2_profiles.xml"
+        <xi:include href="profiles/nav2.xml"
           xpointer="xpointer(/profiles/*)"/>
-        <xi:include href="map_profiles.xml"
+        <xi:include href="profiles/map.xml"
           xpointer="xpointer(/profiles/*)"/>
-        <xi:include href="rviz2_profiles.xml"
+        <xi:include href="profiles/rviz2.xml"
           xpointer="xpointer(/profiles/*)"/>
       </profiles>
     </enclave>
     <enclave path="/nav2_slam">
       <profiles>
-        <xi:include href="nav2_profiles.xml"
+        <xi:include href="profiles/nav2.xml"
           xpointer="xpointer(/profiles/*)"/>
-        <xi:include href="rviz2_profiles.xml"
+        <xi:include href="profiles/rviz2.xml"
           xpointer="xpointer(/profiles/*)"/>
-        <xi:include href="slam_profiles.xml"
+        <xi:include href="profiles/slam.xml"
           xpointer="xpointer(/profiles/*)"/>
       </profiles>
     </enclave>
