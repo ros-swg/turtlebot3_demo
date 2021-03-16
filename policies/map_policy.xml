@@ -96,6 +96,9 @@
             <service>spawn_entity</service>
             <service>unpause_physics</service>
           </services>
+          <topics publish="ALLOW">
+            <topic>/clock</topic>
+          </topics>
         </profile>
         <profile node="global_costmap_client" ns="/">
           <xi:include href="common/node.xml"
@@ -289,6 +292,7 @@
             <topic>particlecloud</topic>
             <topic>plan</topic>
             <topic>scan</topic>
+            <topic>visualization_marker_array</topic>
             <topic>waypoints</topic>
           </topics>
           <topics publish="ALLOW">
@@ -345,7 +349,7 @@
           </topics>
         </profile>
         <profile node="waypoint_follower" ns="/">
-          <xi:include href="common/node.xml"
+          <xi:include href="common/lifecycle_node.xml"
             xpointer="xpointer(/profile/*)"/>
           <actions execute="ALLOW">
             <action>/FollowWaypoints</action>
