@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <profile node="gazebo" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>delete_entity</service>
+      <service>get_model_list</service>
+      <service>pause_physics</service>
+      <service>reset_simulation</service>
+      <service>reset_world</service>
+      <service>spawn_entity</service>
+      <service>unpause_physics</service>
+    </services>
+    <topics publish="ALLOW">
+      <topic>/clock</topic>
+    </topics>
+  </profile>
+</profiles>

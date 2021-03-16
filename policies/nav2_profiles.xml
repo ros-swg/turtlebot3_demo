@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <profile node="bt_navigator" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions execute="ALLOW">
+      <action>/navigate_to_pose</action>
+    </actions>
+    <topics subscribe="ALLOW">
+      <topic>goal_pose</topic>
+      <topic>tf</topic>
+      <topic>tf_static</topic>
+    </topics>
+  </profile>
+  <profile node="bt_navigator_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions call="ALLOW">
+      <action>/compute_path_to_pose</action>
+      <action>/follow_path</action>
+      <action>/navigate_to_pose</action>
+      <action>/spin</action>
+      <action>/wait</action>
+    </actions>
+    <services request="ALLOW">
+      <service>/global_costmap/clear_entirely_global_costmap</service>
+      <service>/local_costmap/clear_entirely_local_costmap</service>
+    </services>
+    <topics publish="ALLOW">
+      <topic>behavior_tree_log</topic>
+    </topics>
+  </profile>
+  <profile node="controller_server" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics subscribe="ALLOW">
+      <topic>odom</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>cmd_vel</topic>
+      <topic>cost_cloud</topic>
+      <topic>evaluation</topic>
+      <topic>local_plan</topic>
+      <topic>marker</topic>
+      <topic>received_global_plan</topic>
+      <topic>transformed_global_plan</topic>
+    </topics>
+  </profile>
+  <profile node="controller_server_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions execute="ALLOW">
+      <action>/follow_path</action>
+    </actions>
+  </profile>
+  <profile node="global_costmap_client" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+  </profile>
+  <profile node="global_costmap" ns="/global_costmap">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>clear_around_global_costmap</service>
+      <service>clear_entirely_global_costmap</service>
+      <service>clear_except_global_costmap</service>
+      <service>get_costmap</service>
+    </services>
+    <topics subscribe="ALLOW">
+      <topic>/map</topic>
+      <topic>footprint</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>costmap</topic>
+      <topic>costmap_raw</topic>
+      <topic>costmap_updates</topic>
+      <topic>published_footprint</topic>
+    </topics>
+  </profile>
+  <profile node="global_costmap_rclcpp_node" ns="/global_costmap">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics subscribe="ALLOW">
+      <topic>/scan</topic>
+    </topics>
+  </profile>
+  <profile node="lifecycle_manager_localization" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>~/is_active</service>
+      <service>~/manage_nodes</service>
+    </services>
+  </profile>
+  <profile node="lifecycle_manager_localization_service_client" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services request="ALLOW">
+      <service>/amcl/change_state</service>
+      <service>/amcl/get_state</service>
+      <service>/map_server/change_state</service>
+      <service>/map_server/get_state</service>
+    </services>
+  </profile>
+  <profile node="lifecycle_manager_navigation" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>~/is_active</service>
+      <service>~/manage_nodes</service>
+    </services>
+  </profile>
+  <profile node="lifecycle_manager_navigation_service_client" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services request="ALLOW">
+      <service>/bt_navigator/change_state</service>
+      <service>/bt_navigator/get_state</service>
+      <service>/controller_server/change_state</service>
+      <service>/controller_server/get_state</service>
+      <service>/planner_server/change_state</service>
+      <service>/planner_server/get_state</service>
+      <service>/recoveries_server/change_state</service>
+      <service>/recoveries_server/get_state</service>
+      <service>/waypoint_follower/change_state</service>
+      <service>/waypoint_follower/get_state</service>
+    </services>
+  </profile>
+  <profile node="local_costmap_client" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+  </profile>
+  <profile node="local_costmap" ns="/local_costmap">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>clear_around_local_costmap</service>
+      <service>clear_entirely_local_costmap</service>
+      <service>clear_except_local_costmap</service>
+      <service>get_costmap</service>
+    </services>
+    <topics subscribe="ALLOW">
+      <topic>footprint</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>clearing_endpoints</topic>
+      <topic>costmap</topic>
+      <topic>costmap_raw</topic>
+      <topic>costmap_updates</topic>
+      <topic>published_footprint</topic>
+      <topic>voxel_grid</topic>
+    </topics>
+  </profile>
+  <profile node="local_costmap_rclcpp_node" ns="/local_costmap">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics subscribe="ALLOW">
+      <topic>/scan</topic>
+    </topics>
+  </profile>
+  <profile node="planner_server" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics publish="ALLOW">
+      <topic>plan</topic>
+    </topics>
+  </profile>
+  <profile node="planner_server_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions execute="ALLOW">
+      <action>/compute_path_to_pose</action>
+    </actions>
+  </profile>
+  <profile node="recoveries_server" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions execute="ALLOW">
+      <action>/backup</action>
+      <action>/spin</action>
+      <action>/wait</action>
+    </actions>
+    <topics subscribe="ALLOW">
+      <topic>/local_costmap/costmap_raw</topic>
+      <topic>/local_costmap/published_footprint</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>cmd_vel</topic>
+    </topics>
+  </profile>
+  <profile node="recoveries_server_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+  </profile>
+  <profile node="rviz2" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions call="ALLOW">
+      <action>/FollowWaypoints</action>
+      <action>/navigate_to_pose</action>
+    </actions>
+    <services request="ALLOW">
+      <service>/lifecycle_manager_localization/is_active</service>
+      <service>/lifecycle_manager_localization/manage_nodes</service>
+      <service>/lifecycle_manager_navigation/is_active</service>
+      <service>/lifecycle_manager_navigation/manage_nodes</service>
+    </services>
+    <topics subscribe="ALLOW">
+      <topic>/global_costmap/costmap</topic>
+      <topic>/global_costmap/costmap_updates</topic>
+      <topic>/global_costmap/voxel_marked_cloud</topic>
+      <topic>/local_costmap/costmap</topic>
+      <topic>/local_costmap/costmap_updates</topic>
+      <topic>/local_costmap/published_footprint</topic>
+      <topic>/local_costmap/voxel_marked_cloud</topic>
+      <topic>/mobile_base/sensors/bumper_pointcloud</topic>
+      <topic>downsampled_costmap</topic>
+      <topic>downsampled_costmap_updates</topic>
+      <topic>local_plan</topic>
+      <topic>map</topic>
+      <topic>map_updates</topic>
+      <topic>particlecloud</topic>
+      <topic>plan</topic>
+      <topic>scan</topic>
+      <topic>visualization_marker_array</topic>
+      <topic>waypoints</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>clicked_point</topic>
+      <topic>initialpose</topic>
+      <topic>waypoints</topic>
+    </topics>
+  </profile>
+  <profile node="transform_listener_impl_" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics subscribe="ALLOW">
+      <topic>tf</topic>
+      <topic>tf_static</topic>
+    </topics>
+  </profile>
+  <profile node="waypoint_follower" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions execute="ALLOW">
+      <action>/FollowWaypoints</action>
+    </actions>
+  </profile>
+  <profile node="waypoint_follower_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions call="ALLOW">
+      <action>/navigate_to_pose</action>
+    </actions>
+  </profile>
+</profiles>

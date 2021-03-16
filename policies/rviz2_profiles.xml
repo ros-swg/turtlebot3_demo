@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <profile node="rviz2" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions call="ALLOW">
+      <action>/FollowWaypoints</action>
+      <action>/navigate_to_pose</action>
+    </actions>
+    <services request="ALLOW">
+      <service>/lifecycle_manager_localization/is_active</service>
+      <service>/lifecycle_manager_localization/manage_nodes</service>
+      <service>/lifecycle_manager_navigation/is_active</service>
+      <service>/lifecycle_manager_navigation/manage_nodes</service>
+    </services>
+    <topics subscribe="ALLOW">
+      <topic>/global_costmap/costmap</topic>
+      <topic>/global_costmap/costmap_updates</topic>
+      <topic>/global_costmap/voxel_marked_cloud</topic>
+      <topic>/local_costmap/costmap</topic>
+      <topic>/local_costmap/costmap_updates</topic>
+      <topic>/local_costmap/published_footprint</topic>
+      <topic>/local_costmap/voxel_marked_cloud</topic>
+      <topic>/mobile_base/sensors/bumper_pointcloud</topic>
+      <topic>downsampled_costmap</topic>
+      <topic>downsampled_costmap_updates</topic>
+      <topic>local_plan</topic>
+      <topic>map</topic>
+      <topic>map_updates</topic>
+      <topic>particlecloud</topic>
+      <topic>plan</topic>
+      <topic>scan</topic>
+      <topic>visualization_marker_array</topic>
+      <topic>waypoints</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>clicked_point</topic>
+      <topic>initialpose</topic>
+      <topic>waypoints</topic>
+    </topics>
+  </profile>
+</profiles>
