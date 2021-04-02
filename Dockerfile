@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=ros:foxy
+ARG FROM_IMAGE=ros:rolling
 ARG OVERLAY_WS=/opt/ros/overlay_ws
 
 # multi-stage for caching
@@ -63,6 +63,11 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     rosdep install -q -y \
       --from-paths src \
       --ignore-src \
+      --skip-keys " \
+        cartographer_ros \
+        hls_lfcd_lds_driver \
+        dynamixel_sdk \
+        " \
     && rm -rf /var/lib/apt/lists/*
 
 # build overlay source
@@ -71,7 +76,15 @@ ARG OVERLAY_MIXINS="release ccache"
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install \
-      --mixin $OVERLAY_MIXINS
+      --mixin $OVERLAY_MIXINS \
+      --packages-up-to \
+        turtlebot3_navigation2 \
+        turtlebot3_simulations \
+        turtlebot3_teleop \
+      --packages-skip \
+        turtlebot3 \
+        turtlebot3_bringup \
+        turtlebot3_node
 
 # # install RTI Connext
 # ENV RTI_NC_LICENSE_ACCEPTED yes
