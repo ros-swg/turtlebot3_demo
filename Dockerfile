@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=ros:rolling
+ARG FROM_IMAGE=osrf/ros2:nightly-rmw
 ARG OVERLAY_WS=/opt/ros/overlay_ws
 
 # multi-stage for caching
@@ -57,16 +57,15 @@ ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
 COPY --from=cacher /tmp/$OVERLAY_WS/src ./src
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get update && rosdep update \
-      --rosdistro $ROS_DISTRO && \
+    apt-get update && \
     apt-get upgrade -y && \
     rosdep install -q -y \
       --from-paths src \
       --ignore-src \
       --skip-keys " \
         cartographer_ros \
-        hls_lfcd_lds_driver \
         dynamixel_sdk \
+        hls_lfcd_lds_driver \
         " \
     && rm -rf /var/lib/apt/lists/*
 
