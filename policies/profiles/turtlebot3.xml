@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <profile node="robot_state_publisher" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics subscribe="ALLOW">
+      <topic>joint_states</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>robot_description</topic>
+      <topic>tf</topic>
+      <topic>tf_static</topic>
+    </topics>
+  </profile>
+  <profile node="turtlebot3_diff_drive" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics subscribe="ALLOW">
+      <topic>cmd_vel</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>odom</topic>
+      <topic>tf</topic>
+    </topics>
+  </profile>
+  <profile node="turtlebot3_imu" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics publish="ALLOW">
+      <topic>imu</topic>
+    </topics>
+  </profile>
+  <profile node="turtlebot3_joint_state" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics publish="ALLOW">
+      <topic>joint_states</topic>
+    </topics>
+  </profile>
+  <profile node="turtlebot3_laserscan" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics publish="ALLOW">
+      <topic>scan</topic>
+    </topics>
+  </profile>
+</profiles>

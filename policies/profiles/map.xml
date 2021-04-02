@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <profile node="amcl" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>reinitialize_global_localization</service>
+      <service>request_nomotion_update</service>
+    </services>
+    <topics subscribe="ALLOW">
+      <topic>initialpose</topic>
+      <topic>map</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>amcl_pose</topic>
+      <topic>particle_cloud</topic>
+      <topic>particlecloud</topic>
+    </topics>
+  </profile>
+  <profile node="amcl_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <topics subscribe="ALLOW">
+      <topic>scan</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>tf</topic>
+    </topics>
+  </profile>
+  <profile node="lifecycle_manager_localization" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>~/is_active</service>
+      <service>~/manage_nodes</service>
+    </services>
+  </profile>
+  <profile node="lifecycle_manager_localization_service_client" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services request="ALLOW">
+      <service>/amcl/change_state</service>
+      <service>/amcl/get_state</service>
+      <service>/map_server/change_state</service>
+      <service>/map_server/get_state</service>
+    </services>
+  </profile>
+  <profile node="map_server" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>~/load_map</service>
+      <service>~/map</service>
+    </services>
+    <topics publish="ALLOW">
+      <topic>map</topic>
+    </topics>
+  </profile>
+</profiles>

@@ -155,3 +155,15 @@ git clone git@github.com:ros-swg/turtlebot3_demo.git
 cd turtlebot3_demo
 docker build --tag rosswg/turtlebot3_demo .
 ```
+
+To attach the demo to the host's network interfaces, you may need to run the container as privileged to get the rviz and gazebo GUI to adapt with the dbus, while also using the host's PID and IPC namespace to avoid issues with colliding DDS GUIDs as referenced in this answers.ros.org question [here](https://answers.ros.org/question/296828/ros2-connectivity-across-docker-containers-via-host-driver)
+
+```
+rocker --x11 --nvidia --oyr-run-arg " \
+    --ipc=host \
+    --net=host \
+    --pid=host \
+    --privileged" \
+  rosswg/turtlebot3_demo \
+  "byobu -f configs/unsecure.conf attach"
+```

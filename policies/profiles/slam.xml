@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <profile node="lifecycle_manager_slam" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>~/is_active</service>
+      <service>~/manage_nodes</service>
+    </services>
+  </profile>
+  <profile node="lifecycle_manager_slam_service_client" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services request="ALLOW">
+      <service>/map_saver/change_state</service>
+      <service>/map_saver/get_state</service>
+    </services>
+  </profile>
+  <profile node="map_saver" ns="/">
+    <xi:include href="common/lifecycle_node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>~/save_map</service>
+    </services>
+  </profile>
+  <profile node="map_saver_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+  </profile>
+  <profile node="slam_toolbox" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services reply="ALLOW">
+      <service>clear_queue</service>
+      <service>deserialize_map</service>
+      <service>dynamic_map</service>
+      <service>pause_new_measurements</service>
+      <service>save_map</service>
+      <service>serialize_map</service>
+    </services>
+    <topics subscribe="ALLOW">
+      <topic>map</topic>
+      <topic>scan</topic>
+    </topics>
+    <topics publish="ALLOW">
+      <topic>graph_visualization</topic>
+      <topic>map</topic>
+      <topic>map_metadata</topic>
+      <topic>tf</topic>
+    </topics>
+  </profile>
+</profiles>
