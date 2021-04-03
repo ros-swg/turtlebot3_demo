@@ -5,7 +5,7 @@
     <xi:include href="common/node.xml"
       xpointer="xpointer(/profile/*)"/>
     <actions call="ALLOW">
-      <action>/FollowWaypoints</action>
+      <action>/follow_waypoints</action>
       <action>/navigate_to_pose</action>
     </actions>
     <services request="ALLOW">
@@ -28,7 +28,7 @@
       <topic>local_plan</topic>
       <topic>map</topic>
       <topic>map_updates</topic>
-      <topic>particlecloud</topic>
+      <topic>particle_cloud</topic>
       <topic>plan</topic>
       <topic>scan</topic>
       <topic>visualization_marker_array</topic>
