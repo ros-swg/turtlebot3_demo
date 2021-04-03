@@ -15,10 +15,10 @@ repositories:
     version: ros2
   ROBOTIS-GIT/turtlebot3_simulations:
     type: git
-    url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
-    version: ros2
-    # url: https://github.com/ruffsl/turtlebot3_simulations.git
-    # version: navigation2_simulation
+    # url: https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+    # version: ros2
+    url: https://github.com/ruffsl/turtlebot3_simulations.git
+    version: patch_deprecated
   ros-planning/navigation2:
     type: git
     url: https://github.com/ros-planning/navigation2.git
