@@ -66,6 +66,16 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
         cartographer_ros \
         dynamixel_sdk \
         hls_lfcd_lds_driver \
+        nav2_bringup \
+        navigation2 \
+        slam_toolbox \
+        turtlebot3 \
+        turtlebot3_bringup \
+        turtlebot3_cartographer \
+        turtlebot3_example \
+        turtlebot3_navigation2 \
+        turtlebot3_node \
+        turtlebot3_teleop \
         " \
     && rm -rf /var/lib/apt/lists/*
 
@@ -77,13 +87,8 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
       --symlink-install \
       --mixin $OVERLAY_MIXINS \
       --packages-up-to \
-        turtlebot3_navigation2 \
         turtlebot3_simulations \
-        turtlebot3_teleop \
-      --packages-skip \
-        turtlebot3 \
-        turtlebot3_bringup \
-        turtlebot3_node
+        turtlebot3_teleop
 
 # # install RTI Connext
 # ENV RTI_NC_LICENSE_ACCEPTED yes
