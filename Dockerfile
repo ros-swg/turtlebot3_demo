@@ -66,14 +66,11 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
         cartographer_ros \
         dynamixel_sdk \
         hls_lfcd_lds_driver \
-        nav2_bringup \
-        navigation2 \
-        slam_toolbox \
+        rti-connext-dds-5.3.1 \
         turtlebot3 \
         turtlebot3_bringup \
         turtlebot3_cartographer \
         turtlebot3_example \
-        turtlebot3_navigation2 \
         turtlebot3_node \
         turtlebot3_teleop \
         " \
@@ -87,6 +84,8 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
       --symlink-install \
       --mixin $OVERLAY_MIXINS \
       --packages-up-to \
+        rmw_connextdds \
+        turtlebot3_navigation2 \
         turtlebot3_simulations \
         turtlebot3_teleop
 
