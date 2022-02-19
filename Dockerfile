@@ -67,6 +67,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
         dynamixel_sdk \
         hls_lfcd_lds_driver \
         rti-connext-dds-5.3.1 \
+        rti-connext-dds-6.0.1 \
         turtlebot3 \
         turtlebot3_bringup \
         turtlebot3_cartographer \
