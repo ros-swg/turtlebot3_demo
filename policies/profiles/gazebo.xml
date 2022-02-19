@@ -5,6 +5,10 @@
     <xi:include href="common/node.xml"
       xpointer="xpointer(/profile/*)"/>
     <services reply="ALLOW">
+      <service>apply_joint_effort</service>
+      <service>apply_link_wrench</service>
+      <service>clear_joint_efforts</service>
+      <service>clear_link_wrenches</service>
       <service>delete_entity</service>
       <service>get_model_list</service>
       <service>pause_physics</service>
@@ -15,6 +19,7 @@
     </services>
     <topics publish="ALLOW">
       <topic>/clock</topic>
+      <topic>/performance_metrics</topic>
     </topics>
   </profile>
 </profiles>
