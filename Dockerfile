@@ -62,19 +62,6 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     rosdep install -q -y \
       --from-paths src \
       --ignore-src \
-      --skip-keys " \
-        cartographer_ros \
-        dynamixel_sdk \
-        hls_lfcd_lds_driver \
-        rti-connext-dds-5.3.1 \
-        rti-connext-dds-6.0.1 \
-        turtlebot3 \
-        turtlebot3_bringup \
-        turtlebot3_cartographer \
-        turtlebot3_example \
-        turtlebot3_node \
-        turtlebot3_teleop \
-        " \
     && rm -rf /var/lib/apt/lists/*
 
 # build overlay source
@@ -83,12 +70,7 @@ ARG OVERLAY_MIXINS="release ccache"
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     colcon build \
       --symlink-install \
-      --mixin $OVERLAY_MIXINS \
-      --packages-up-to \
-        rmw_connextdds \
-        turtlebot3_navigation2 \
-        turtlebot3_simulations \
-        turtlebot3_teleop
+      --mixin $OVERLAY_MIXINS
 
 # # install RTI Connext
 # ENV RTI_NC_LICENSE_ACCEPTED yes
