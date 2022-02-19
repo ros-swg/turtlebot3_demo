@@ -57,7 +57,8 @@ ARG OVERLAY_WS
 WORKDIR $OVERLAY_WS
 COPY --from=cacher /tmp/$OVERLAY_WS/src ./src
 RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
-    apt-get update && \
+    apt-get update && rosdep update \
+      --rosdistro $ROS_DISTRO && \
     apt-get upgrade -y && \
     rosdep install -q -y \
       --from-paths src \
