@@ -19,8 +19,46 @@
       xpointer="xpointer(/profile/*)"/>
     <actions call="ALLOW">
       <action>/compute_path_to_pose</action>
+      <action>/compute_path_through_poses</action>
       <action>/follow_path</action>
       <action>/navigate_to_pose</action>
+      <action>/navigate_through_poses</action>
+      <action>/spin</action>
+      <action>/wait</action>
+    </actions>
+    <services request="ALLOW">
+      <service>/global_costmap/clear_entirely_global_costmap</service>
+      <service>/local_costmap/clear_entirely_local_costmap</service>
+    </services>
+    <topics publish="ALLOW">
+      <topic>behavior_tree_log</topic>
+    </topics>
+  </profile>
+  <profile node="bt_navigatornavigate_to_pose_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions call="ALLOW">
+      <action>/compute_path_to_pose</action>
+      <action>/follow_path</action>
+      <action>/navigate_to_pose</action>
+      <action>/spin</action>
+      <action>/wait</action>
+    </actions>
+    <services request="ALLOW">
+      <service>/global_costmap/clear_entirely_global_costmap</service>
+      <service>/local_costmap/clear_entirely_local_costmap</service>
+    </services>
+    <topics publish="ALLOW">
+      <topic>behavior_tree_log</topic>
+    </topics>
+  </profile>
+  <profile node="bt_navigatornavigate_through_poses_rclcpp_node" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <actions call="ALLOW">
+      <action>/compute_path_through_poses</action>
+      <action>/follow_path</action>
+      <action>/navigate_through_poses</action>
       <action>/spin</action>
       <action>/wait</action>
     </actions>
