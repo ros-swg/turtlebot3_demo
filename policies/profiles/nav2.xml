@@ -2,10 +2,11 @@
 <profiles
   xmlns:xi="http://www.w3.org/2001/XInclude">
   <profile node="bt_navigator" ns="/">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <actions execute="ALLOW">
       <action>/navigate_to_pose</action>
+      <action>/navigate_through_pose</action>
     </actions>
     <topics subscribe="ALLOW">
       <topic>goal_pose</topic>
@@ -32,10 +33,11 @@
     </topics>
   </profile>
   <profile node="controller_server" ns="/">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <topics subscribe="ALLOW">
       <topic>odom</topic>
+      <topic>speed_limit</topic>
     </topics>
     <topics publish="ALLOW">
       <topic>cmd_vel</topic>
@@ -59,7 +61,7 @@
       xpointer="xpointer(/profile/*)"/>
   </profile>
   <profile node="global_costmap" ns="/global_costmap">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <services reply="ALLOW">
       <service>clear_around_global_costmap</service>
@@ -132,7 +134,7 @@
       xpointer="xpointer(/profile/*)"/>
   </profile>
   <profile node="local_costmap" ns="/local_costmap">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <services reply="ALLOW">
       <service>clear_around_local_costmap</service>
@@ -160,7 +162,7 @@
     </topics>
   </profile>
   <profile node="planner_server" ns="/">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <topics publish="ALLOW">
       <topic>plan</topic>
@@ -174,7 +176,7 @@
     </actions>
   </profile>
   <profile node="recoveries_server" ns="/">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <actions execute="ALLOW">
       <action>/backup</action>
@@ -241,10 +243,10 @@
     </topics>
   </profile>
   <profile node="waypoint_follower" ns="/">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <actions execute="ALLOW">
-      <action>/FollowWaypoints</action>
+      <action>/follow_waypoints</action>
     </actions>
   </profile>
   <profile node="waypoint_follower_rclcpp_node" ns="/">

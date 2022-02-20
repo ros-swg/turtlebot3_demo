@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile xmlns:xi="http://www.w3.org/2003/XInclude">
+  <xi:include href="lifecycle_node.xml"
+    xpointer="xpointer(/profile/*)"/>
+  <topics publish="ALLOW">
+    <topic>/bond</topic>
+  </topics>
+  <topics subscribe="ALLOW">
+    <topic>/bond</topic>
+  </topics>
+</profile>
