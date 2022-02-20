@@ -6,7 +6,7 @@
       xpointer="xpointer(/profile/*)"/>
     <actions execute="ALLOW">
       <action>/navigate_to_pose</action>
-      <action>/navigate_through_pose</action>
+      <action>/navigate_through_poses</action>
     </actions>
     <topics subscribe="ALLOW">
       <topic>goal_pose</topic>
@@ -176,6 +176,7 @@
       xpointer="xpointer(/profile/*)"/>
     <actions execute="ALLOW">
       <action>/compute_path_to_pose</action>
+      <action>/compute_path_through_poses</action>
     </actions>
   </profile>
   <profile node="recoveries_server" ns="/">
