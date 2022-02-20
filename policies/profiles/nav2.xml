@@ -167,6 +167,9 @@
     <topics publish="ALLOW">
       <topic>plan</topic>
     </topics>
+    <services reply="ALLOW">
+      <service>is_path_valid</service>
+    </services>
   </profile>
   <profile node="planner_server_rclcpp_node" ns="/">
     <xi:include href="common/node.xml"

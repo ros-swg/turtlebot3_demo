@@ -41,4 +41,8 @@
       <topic>waypoints</topic>
     </topics>
   </profile>
+  <profile node="_" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+  </profile>
 </profiles>
