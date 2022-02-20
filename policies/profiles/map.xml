@@ -2,7 +2,7 @@
 <profiles
   xmlns:xi="http://www.w3.org/2001/XInclude">
   <profile node="amcl" ns="/">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <services reply="ALLOW">
       <service>reinitialize_global_localization</service>
@@ -47,7 +47,7 @@
     </services>
   </profile>
   <profile node="map_server" ns="/">
-    <xi:include href="common/lifecycle_node.xml"
+    <xi:include href="common/nav2_lifecycle_node.xml"
       xpointer="xpointer(/profile/*)"/>
     <services reply="ALLOW">
       <service>~/load_map</service>

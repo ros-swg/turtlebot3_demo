@@ -22,4 +22,11 @@
       <topic>/performance_metrics</topic>
     </topics>
   </profile>
+  <profile node="spawn_entity" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
+    <services request="ALLOW">
+      <service>spawn_entity</service>
+    </services>
+  </profile>
 </profiles>

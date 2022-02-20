@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profiles
   xmlns:xi="http://www.w3.org/2001/XInclude">
-  <profile node="rviz2" ns="/">
+  <profile node="rviz" ns="/">
     <xi:include href="common/node.xml"
       xpointer="xpointer(/profile/*)"/>
     <actions call="ALLOW">
       <action>/follow_waypoints</action>
+      <action>/navigate_through_poses</action>
       <action>/navigate_to_pose</action>
     </actions>
     <services request="ALLOW">
@@ -39,5 +40,9 @@
       <topic>initialpose</topic>
       <topic>waypoints</topic>
     </topics>
+  </profile>
+  <profile node="_" ns="/">
+    <xi:include href="common/node.xml"
+      xpointer="xpointer(/profile/*)"/>
   </profile>
 </profiles>
